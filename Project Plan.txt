@@ -1,29 +1,57 @@
-What program are we going to create? Use your brainstorming from the solo checkpoint to answer this question together.
+What program are we going to create?
 
-We will recreate the Asteroid game.
+-We will recreate the Asteroid game (An asteroid-wrecker spaceship that blasts things out!)
 
-Main Scene
+What technologies will we use? 
 
-Play button
-Help button
-Game Scene
-User-controlled paddle
-Angled ball movement
-Multicolored bricks
-Collision detection
-Life display
-Score display
-Sound effects
-Help Scene
+-To program our game, we will code using the Python language and the Arcade library.
 
-Help text
-Back button
-Win Scene
+Following is a list of the features that will be available in the final release of the game:
 
-Announcement
-Smiley face animation
-Lose Scene
+***Main Scene***
 
-Announcement
-Sad face animation
-Restart button
+-Play button;
+-Help button;
+-Highest Score;
+-Game Scene;
+-User-controlled spaceship;
+-Asteroids from random directions;
+-Different kinds of enemies (More robust asteroids, other ships, etc);
+-Power-ups for the spaceship guns;
+-Collision detection;
+-Life display;
+-Score display;
+-Sound effects;
+
+
+***Lose Scene***
+
+-Announcement;
+-Restart button;
+
+Timeline:
+
+End of Week 5 (Alpha Release)
+  -Game Scene;
+  -Collision detection working;
+  -Standard asteroids and score working;
+  -Lose Scene (Announcement and Restart Button);
+  
+Mid-Week 6 (Beta Release)
+  -Main Scene:
+    *Play Button;
+    *Animated Background;
+    *Help Button;
+  -Game Scene:
+    *Implemented 1 new type of enemy;
+    *Implemented 1 power-up;
+    *Implemented growing speed of asteroids as score increases;
+    *Implemented Sound Effects;
+    
+ End of Week 6 (Release Candidate)
+  -Game Scene:
+    *Implemented 2 more power-ups (three in total);
+    *Implemented 2 new enemies;
+    *Implemented Highest Score Tracker;
+ Mid-Week 7 (Stable Release)
+  -Bug fixes and other corrections;
