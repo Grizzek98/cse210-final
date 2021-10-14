@@ -1,0 +1,29 @@
+What program are we going to create? Use your brainstorming from the solo checkpoint to answer this question together.
+
+We will recreate the Asteroid game.
+
+Main Scene
+
+Play button
+Help button
+Game Scene
+User-controlled paddle
+Angled ball movement
+Multicolored bricks
+Collision detection
+Life display
+Score display
+Sound effects
+Help Scene
+
+Help text
+Back button
+Win Scene
+
+Announcement
+Smiley face animation
+Lose Scene
+
+Announcement
+Sad face animation
+Restart button
