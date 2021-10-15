@@ -1,5 +1,5 @@
 
-from asteroid.game import constants
+from game import constants
 from game.keyboard_control import KeyboardControl
 from game.floating_object import FloatingObject
 
