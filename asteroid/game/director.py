@@ -20,6 +20,8 @@ class Director(arcade.Window):
                 height (constant): The height of the arcade screen.
                 title (constant): The title of the arcade screen.
         """
+        super().__init__(width, height, title)
+        arcade.set_background_color(arcade.color.BLUE_GREEN)
 
     def setup(self):
         """ Handles the initial setup of the game.
@@ -29,7 +31,7 @@ class Director(arcade.Window):
         """
         pass
 
-    def on_update(self):
+    def on_update(self, delta_time):
         """ Handles what happens every update.
         
             Args:
@@ -43,7 +45,7 @@ class Director(arcade.Window):
             Args:
                 TODO
         """
-        pass
+        arcade.start_render()
 
     def on_key_press(self, key, modifiers):
         """ Handles what happens when a key is pressed.
