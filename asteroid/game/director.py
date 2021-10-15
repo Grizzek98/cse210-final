@@ -1,5 +1,11 @@
 
 import arcade
+from os import path
+
+from arcade.sprite_list.sprite_list import SpriteList
+from game import constants
+from game.player_ship import PlayerShip
+from game.asteroid import Asteroid
 
 class Director(arcade.Window):
     """ The main controller class. Handles the flow of the program.
@@ -8,34 +14,47 @@ class Director(arcade.Window):
             Controller
         
         Attributes:
-            NONE
+            sprite_list (list): A list of sprites on-screen.
+            player_ship_sprite (arcade.Sprite): A player_controlled ship sprite object.
+            asteroid (arcade.Sprite): An asteroid sprite object.
     """
 
     def __init__(self, width, height, title):
         """ The constructor of the class. Initializes the classes attributes and opens the arcade window.
         
             Args:
-                self (ArcadeDirector): An instance of ArcadeDirector.
+                self (Director): An instance of Director.
                 width (constant): The width of the arcade screen.
                 height (constant): The height of the arcade screen.
                 title (constant): The title of the arcade screen.
         """
+        super().__init__(width, height, title)
+        arcade.set_background_color(arcade.color.BLUE_GREEN)
+        self.sprite_list = None
+        self.player_ship_sprite = None
+        self.asteroid_sprite = None
 
     def setup(self):
         """ Handles the initial setup of the game.
         
             Args:
-                TODO
+                self (Director): An instance of Director.
         """
-        pass
+        self.sprite_list = arcade.SpriteList()
 
-    def on_update(self):
+        self.player_ship_sprite = PlayerShip(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "player_ship.jpg")), constants.SPRITE_SCALING)
+        self.player_ship_sprite.center_x = constants.SCREEN_WIDTH / 2
+        self.player_ship_sprite.center_y = constants.SCREEN_HEIGHT / 2
+        self.sprite_list.append(self.player_ship_sprite)
+
+    def on_update(self, delta_time):
         """ Handles what happens every update.
         
             Args:
-                TODO
+                self (Director): An instance of Director.
+                delta_time (not sure): Describes the elapsed time between frames.
         """
-        pass
+        self.sprite_list.update()
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
@@ -43,7 +62,8 @@ class Director(arcade.Window):
             Args:
                 TODO
         """
-        pass
+        arcade.start_render()
+        self.sprite_list.draw()
 
     def on_key_press(self, key, modifiers):
         """ Handles what happens when a key is pressed.
