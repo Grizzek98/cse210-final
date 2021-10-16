@@ -31,6 +31,7 @@ class Director(arcade.Window):
         super().__init__(width, height, title)
         arcade.set_background_color(arcade.color.BLUE_GREEN)
         self.sprite_list = None
+        self.asteroid_sprite_list = None
         self.player_ship_sprite = None
         self.asteroid_sprite = None
         self.keyboard_control = KeyboardControl()
@@ -42,11 +43,17 @@ class Director(arcade.Window):
                 self (Director): An instance of Director.
         """
         self.sprite_list = arcade.SpriteList()
+        self.asteroid_sprite_list = arcade.SpriteList()
 
         self.player_ship_sprite = PlayerShip(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "player_ship.jpg")), constants.SPRITE_SCALING)
         self.player_ship_sprite.center_x = constants.SCREEN_WIDTH / 2
         self.player_ship_sprite.center_y = constants.SCREEN_HEIGHT / 2
         self.sprite_list.append(self.player_ship_sprite)
+
+        self.asteroid_sprite = Asteroid(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "asteroid.jpg")), constants.SPRITE_SCALING)
+        self.asteroid_sprite.center_x = constants.SCREEN_WIDTH / 2 + 100
+        self.asteroid_sprite.center_y = constants.SCREEN_HEIGHT / 2 + 100
+        self.asteroid_sprite_list.append(self.asteroid_sprite)
 
     def on_update(self, delta_time):
         """ Handles what happens every update.
@@ -65,6 +72,7 @@ class Director(arcade.Window):
         """
         arcade.start_render()
         self.sprite_list.draw()
+        self.asteroid_sprite_list.draw()
 
 
     def on_key_press(self, key, modifiers):
