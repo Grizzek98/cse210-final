@@ -34,6 +34,7 @@ class Director(arcade.Window):
         self.asteroid_sprite_list = None
         self.player_ship_sprite = None
         self.asteroid_sprite = None
+        self.projectile_sprite = None
         self.keyboard_control = KeyboardControl()
 
     def setup(self):
@@ -84,6 +85,15 @@ class Director(arcade.Window):
                 BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
         self.player_ship_sprite.key_press(key)
+        
+        #Turn RIGHT/LEFT
+        if key == arcade.key.LEFT:
+            self.player_ship_sprite.change_angle = ANGLE_SPEED
+        elif key == arcade.key.RIGHT:
+            self.player_ship_sprite.change_angle = -ANGLE_SPEED
+            
+        if key == arcade.key.SPACE:
+            self.shot();
 
     def on_key_release(self, key, modifiers):
         """ Handles what happens when a key is released.
@@ -94,7 +104,17 @@ class Director(arcade.Window):
                 BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
         self.player_ship_sprite.key_release(key)
-
+    
+    def shot(self):
+        """Creates a projectile
+        Args:
+            TODO
+    """
+        self.projectile_sprite = Projectile(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "projectile.png")), constants.SPRITE_SCALING)
+        self.projectile_sprite.center_x = self.player_ship_sprite.center_x
+        self.projectile_sprite.center_y = self.player_ship_sprite.center_y - 100
+        self.sprite_list.append(self.projectile_sprite)
+        
     def check_collision(self):
         """ Checks for collision between objects on the screen.
         
