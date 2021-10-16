@@ -5,3 +5,4 @@ Group 7's Final Project
 ---
 * Benjamin Anderson - benjaminanderson98@live.com
 * Matheus Melo - matheus.vmelo99@gmail.com
+* Brad Howard - howardbrad33@gmail.com
