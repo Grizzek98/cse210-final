@@ -45,12 +45,12 @@ class Director(arcade.Window):
         self.sprite_list = arcade.SpriteList()
         self.asteroid_sprite_list = arcade.SpriteList()
 
-        self.player_ship_sprite = PlayerShip(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "player_ship.jpg")), constants.SPRITE_SCALING)
+        self.player_ship_sprite = PlayerShip(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "player_ship.png")), constants.SPRITE_SCALING)
         self.player_ship_sprite.center_x = constants.SCREEN_WIDTH / 2
         self.player_ship_sprite.center_y = constants.SCREEN_HEIGHT / 2
         self.sprite_list.append(self.player_ship_sprite)
 
-        self.asteroid_sprite = Asteroid(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "asteroid.jpg")), constants.SPRITE_SCALING)
+        self.asteroid_sprite = Asteroid(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "asteroid.png")), constants.SPRITE_SCALING)
         self.asteroid_sprite.center_x = constants.SCREEN_WIDTH / 2 + 100
         self.asteroid_sprite.center_y = constants.SCREEN_HEIGHT / 2 + 100
         self.asteroid_sprite_list.append(self.asteroid_sprite)
