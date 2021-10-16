@@ -25,12 +25,22 @@ class PlayerShip(FloatingObject, KeyboardControl):
         self.check_bounds_y()
 
     def check_bounds_x(self):
+        """ Checks whether object has reached the x boundary.
+        
+            Args:
+                self (PlayerShip): An instance of PlayerShip.
+        """
         if self.left < 0:
             self.left = 0
         if self.right > constants.SCREEN_WIDTH - 1:
             self.right = constants.SCREEN_WIDTH
 
     def check_bounds_y(self):
+        """ Checks whether object has reached the y boundary.
+        
+            Args:
+                self (PlayerShip): An instance of PlayerShip.
+        """
         if self.bottom < 0:
             self.bottom = 0
         if self.top > constants.SCREEN_HEIGHT - 1:
