@@ -2,10 +2,10 @@
 import arcade
 from os import path
 
-from arcade.sprite_list.sprite_list import SpriteList
 from game import constants
 from game.player_ship import PlayerShip
 from game.asteroid import Asteroid
+from game.keyboard_control import KeyboardControl
 
 class Director(arcade.Window):
     """ The main controller class. Handles the flow of the program.
@@ -33,6 +33,7 @@ class Director(arcade.Window):
         self.sprite_list = None
         self.player_ship_sprite = None
         self.asteroid_sprite = None
+        self.keyboard_control = KeyboardControl()
 
     def setup(self):
         """ Handles the initial setup of the game.
@@ -65,21 +66,26 @@ class Director(arcade.Window):
         arcade.start_render()
         self.sprite_list.draw()
 
+
     def on_key_press(self, key, modifiers):
         """ Handles what happens when a key is pressed.
         
             Args:
-                TODO
+                self (ArcadeDirector): An instance of ArcadeDirector.
+                key (input): A key pressed by the user.
+                BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
-        pass
+        self.player_ship_sprite.key_press(key)
 
     def on_key_release(self, key, modifiers):
         """ Handles what happens when a key is released.
         
             Args:
-                TODO
+                self (ArcadeDirector): An instance of ArcadeDirector.
+                key (input): A key pressed by the user.
+                BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
-        pass
+        self.player_ship_sprite.key_release(key)
 
     def check_collision(self):
         """ Checks for collision between objects on the screen.
