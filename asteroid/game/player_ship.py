@@ -19,10 +19,12 @@ class PlayerShip(FloatingObject, KeyboardControl):
             Args:
                 self (PlayerShip): An instance of PlayerShip.
         """
+        self.angle += self.change_angle
         self.move_x()
         self.move_y()
         self.check_bounds_x()
         self.check_bounds_y()
+        self.is_shooting = False
 
     def check_bounds_x(self):
         """ Checks whether object has reached the x boundary.
