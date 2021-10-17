@@ -88,16 +88,7 @@ class Director(arcade.Window):
                 key (input): A key pressed by the user.
                 BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
-        self.player_ship_sprite.key_press(key)
-        
-        #Turn UP
-        if key == arcade.key.W:
-            self.player_ship_sprite.change_angle = constants.ANGLE_SPEED
-        #Turn DOWN
-        #Turn LEFT
-        elif key == arcade.key.A:
-            self.player_ship_sprite.change_angle = -constants.ANGLE_SPEED
-        #Turn RIGHT
+        self.keyboard_control.key_press(key, self.player_ship_sprite)  
 
         
         #TODO in a bullet hell, typically you can shoot and move in different directions
@@ -114,7 +105,7 @@ class Director(arcade.Window):
                 key (input): A key pressed by the user.
                 BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
-        self.player_ship_sprite.key_release(key)
+        self.keyboard_control.key_release(key, self.player_ship_sprite)
     
     def shot(self):
         """Creates a projectile
