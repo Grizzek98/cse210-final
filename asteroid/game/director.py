@@ -97,20 +97,8 @@ class Director(arcade.Window):
                 key (input): A key pressed by the user.
                 BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
-        self.player_ship_sprite.key_press(key)
-        
-        #Turn UP
-        if key == arcade.key.W:
-            self.player_ship_sprite.change_angle = constants.ANGLE_SPEED
-        #Turn DOWN
-        if key ==arcade.key.S:
-            pass
-        #Turn LEFT
-        if key == arcade.key.D:
-            pass
-        if key == arcade.key.A:
-            self.player_ship_sprite.change_angle = -constants.ANGLE_SPEED
-        #Turn RIGHT
+        self.keyboard_control.key_press(key, self.player_ship_sprite)  
+
 
     def on_key_release(self, key, modifiers):
         """ Handles what happens when a key is released.
@@ -120,7 +108,7 @@ class Director(arcade.Window):
                 key (input): A key pressed by the user.
                 BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
-        self.player_ship_sprite.key_release(key)
+        self.keyboard_control.key_release(key, self.player_ship_sprite)
     
     def shot(self):
         """Creates a projectile

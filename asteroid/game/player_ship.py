@@ -19,6 +19,7 @@ class PlayerShip(FloatingObject, KeyboardControl):
             Args:
                 self (PlayerShip): An instance of PlayerShip.
         """
+        self.angle += self.change_angle
         self.move_x()
         self.move_y()
         self.check_bounds_x()

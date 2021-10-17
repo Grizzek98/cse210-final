@@ -12,18 +12,23 @@ control_dict = { #dict belongs outside so it doesn't have to get constructed eve
 #     arcade.key.DOWN: "down",
 #     arcade.key.RIGHT: "right"
 # }
-class KeyControl():
-    """Contains the methods for controlling objects needing keyboard control
-        stereotypes: TODO
-        Attributes: None
+class KeyboardControl():
+    """ Contains the methods for controlling objects needing keyboard control
+
+        Stereotypes:
+            Information Holder
+
+        Attributes: 
+            None
     """
     def key_press(self, key, sprite, modifier=None):
-        """on key press controls
+        """ On key press controls
         
-            args: self, an instance of KeyControl
-            key (int) the key being pressed (uses arcade table)
-            sprite (Sprite), an arcade sprite
-            modifier (int) any modifiers pressed with key
+            Args: 
+                self (KeyboardControl): An instance of KeyboardControl.
+                key (int): The key being pressed (uses arcade table).
+                sprite (Sprite): An arcade sprite.
+                modifier (int): Any modifiers pressed with key.
         """
         if control_dict.get(key, None) is not None:
             sprite.angle = control_dict.get(key)
@@ -36,6 +41,7 @@ class KeyControl():
             sprite.change_y =  constants.MOVEMENT_SPEED
         if key == arcade.key.DOWN:
             sprite.change_y = -constants.MOVEMENT_SPEED
+            
         if key == arcade.key.SPACE:
             #TODO in a bullet hell, typically you can shoot and move in different directions
             #using arrow keys for movement and WASD for firing direction
@@ -44,13 +50,15 @@ class KeyControl():
             #any WASD
             sprite.is_shooting = True
 
+
     def key_release(self, key, sprite, modifier=None):
-        """on key release controls
+        """ On key release controls
         
-            args: self, an instance of KeyControl
-            key (int) the key being pressed (uses arcade table)
-            sprite (Sprite), an arcade sprite
-            modifier (int) any modifiers pressed with key
+            Args: 
+                self: An instance of KeyControl.
+                key (int): The key being pressed (uses arcade table).
+                sprite (Sprite): An arcade sprite.
+                modifier (int): Any modifiers pressed with key.
         """
         if key == arcade.key.LEFT or key == arcade.key.RIGHT:
             sprite.change_x = 0
