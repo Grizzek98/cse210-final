@@ -11,5 +11,14 @@ ENEMY_SPEED = 10
 
 ANGLE_SPEED = 5
 
+
+#according to arcade sprites:
+SPRITE_UP = 0
+SPRITE_LEFT = 90
+SPRITE_DOWN = 180
+SPRITE_RIGHT = 270
+
+PLAYER_PROJECTILE_SPEED = 40
+ENEMY_PROJECTILE_SPEED = 25
 ROOT_DIRECTORY = path.abspath(path.join(path.dirname(__file__),".."))
 RESOURCE_DIRECTORY = path.join(ROOT_DIRECTORY, "resources")

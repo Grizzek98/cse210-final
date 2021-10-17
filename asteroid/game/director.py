@@ -2,6 +2,8 @@
 import arcade
 from os import path
 
+from arcade import sprite_list
+
 from game import constants
 from game.player_ship import PlayerShip
 from game.asteroid import Asteroid
@@ -36,6 +38,7 @@ class Director(arcade.Window):
         self.asteroid_sprite = None
         self.projectile_sprite = None
         self.keyboard_control = KeyboardControl()
+        self.projectile_list = None
 
     def setup(self):
         """ Handles the initial setup of the game.
@@ -44,6 +47,7 @@ class Director(arcade.Window):
                 self (Director): An instance of Director.
         """
         self.sprite_list = arcade.SpriteList()
+        self.projectile_list = arcade.SpriteList()
         self.asteroid_sprite_list = arcade.SpriteList()
 
         self.player_ship_sprite = PlayerShip(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "player_ship.png")), constants.SPRITE_SCALING)
@@ -63,7 +67,7 @@ class Director(arcade.Window):
                 self (Director): An instance of Director.
                 delta_time (not sure): Describes the elapsed time between frames.
         """
-        self.sprite_list.update()
+        self.sprite_list.update() #<3 arcade
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
@@ -86,14 +90,21 @@ class Director(arcade.Window):
         """
         self.player_ship_sprite.key_press(key)
         
-        #Turn RIGHT/LEFT
-        if key == arcade.key.LEFT:
-            self.player_ship_sprite.change_angle = ANGLE_SPEED
-        elif key == arcade.key.RIGHT:
-            self.player_ship_sprite.change_angle = -ANGLE_SPEED
-            
+        #Turn UP
+        if key == arcade.key.W:
+            self.player_ship_sprite.change_angle = constants.ANGLE_SPEED
+        #Turn DOWN
+        #Turn LEFT
+        elif key == arcade.key.A:
+            self.player_ship_sprite.change_angle = -constants.ANGLE_SPEED
+        #Turn RIGHT
+
+        
+        #TODO in a bullet hell, typically you can shoot and move in different directions
+        #using arrow keys for movement and WASD for firing direction
+        #though having some time to rotation sounds pretty good. Probably a short time.
         if key == arcade.key.SPACE:
-            self.shot();
+            self.shot()
 
     def on_key_release(self, key, modifiers):
         """ Handles what happens when a key is released.
@@ -113,7 +124,7 @@ class Director(arcade.Window):
         self.projectile_sprite = Projectile(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "projectile.png")), constants.SPRITE_SCALING)
         self.projectile_sprite.center_x = self.player_ship_sprite.center_x
         self.projectile_sprite.center_y = self.player_ship_sprite.center_y - 100
-        self.sprite_list.append(self.projectile_sprite)
+        self.projectile_list.append(self.projectile_sprite)
         
     def check_collision(self):
         """ Checks for collision between objects on the screen.
