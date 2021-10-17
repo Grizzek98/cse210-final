@@ -3,11 +3,13 @@ import arcade
 from os import path
 
 from arcade import sprite_list
+from asteroid.game import player_ship
 
 from game import constants
 from game.player_ship import PlayerShip
 from game.asteroid import Asteroid
 from game.keyboard_control import KeyboardControl
+from game.projectile import Projectile
 
 class Director(arcade.Window):
     """ The main controller class. Handles the flow of the program.
@@ -67,6 +69,13 @@ class Director(arcade.Window):
                 self (Director): An instance of Director.
                 delta_time (not sure): Describes the elapsed time between frames.
         """
+        if self.player_ship_sprite.is_shooting:
+            new_shot = Projectile(self.player_ship_sprite.center_x,
+            self.player_ship_sprite.center_y,
+            self.player_ship_sprite.angle)
+            self.projectile_list.append(new_shot)
+            pass
+        self.projectile_list.update()
         self.sprite_list.update() #<3 arcade
 
     def on_draw(self):
@@ -94,17 +103,14 @@ class Director(arcade.Window):
         if key == arcade.key.W:
             self.player_ship_sprite.change_angle = constants.ANGLE_SPEED
         #Turn DOWN
+        if key ==arcade.key.S:
+            pass
         #Turn LEFT
-        elif key == arcade.key.A:
+        if key == arcade.key.D:
+            pass
+        if key == arcade.key.A:
             self.player_ship_sprite.change_angle = -constants.ANGLE_SPEED
         #Turn RIGHT
-
-        
-        #TODO in a bullet hell, typically you can shoot and move in different directions
-        #using arrow keys for movement and WASD for firing direction
-        #though having some time to rotation sounds pretty good. Probably a short time.
-        if key == arcade.key.SPACE:
-            self.shot()
 
     def on_key_release(self, key, modifiers):
         """ Handles what happens when a key is released.

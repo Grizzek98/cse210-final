@@ -23,6 +23,7 @@ class PlayerShip(FloatingObject, KeyboardControl):
         self.move_y()
         self.check_bounds_x()
         self.check_bounds_y()
+        self.is_shooting = False
 
     def check_bounds_x(self):
         if self.left < 0:
