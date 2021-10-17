@@ -15,8 +15,11 @@ class Director(arcade.Window):
         
         Attributes:
             sprite_list (list): A list of sprites on-screen.
+            asteroid_sprite_list (list): A list of asteroid sprites on-screen.
             player_ship_sprite (arcade.Sprite): A player_controlled ship sprite object.
             asteroid (arcade.Sprite): An asteroid sprite object.
+            projectile_sprite (arcade.Sprite): An instance of a projectile on-screen.
+            keyboard_control (KeyboardControl): An instance of KeyboardControl.
     """
 
     def __init__(self, width, height, title):
@@ -69,7 +72,7 @@ class Director(arcade.Window):
         """ Handles what happens every time the screen is refreshed.
         
             Args:
-                TODO
+                self (Director): An instance of Director.
         """
         arcade.start_render()
         self.sprite_list.draw()
@@ -107,8 +110,9 @@ class Director(arcade.Window):
     
     def shot(self):
         """Creates a projectile
+
         Args:
-            TODO
+            self (Director): An instance of Director.
     """
         self.projectile_sprite = Projectile(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "projectile.png")), constants.SPRITE_SCALING)
         self.projectile_sprite.center_x = self.player_ship_sprite.center_x
@@ -119,6 +123,6 @@ class Director(arcade.Window):
         """ Checks for collision between objects on the screen.
         
             Args:
-                TODO
+                self (Director): An instance of Director.
         """
         pass
