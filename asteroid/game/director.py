@@ -2,8 +2,8 @@
 import arcade
 from os import path
 
-from arcade import sprite_list
-from asteroid.game import player_ship
+# from arcade import sprite_list
+# from game import player_ship
 
 from game import constants
 from game.player_ship import PlayerShip
@@ -87,6 +87,7 @@ class Director(arcade.Window):
         arcade.start_render()
         self.sprite_list.draw()
         self.asteroid_sprite_list.draw()
+        self.projectile_list.draw()
 
 
     def on_key_press(self, key, modifiers):

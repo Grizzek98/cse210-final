@@ -1,9 +1,8 @@
 
 from game import constants
-from game.keyboard_control import KeyboardControl
 from game.floating_object import FloatingObject
 
-class PlayerShip(FloatingObject, KeyboardControl):
+class PlayerShip(FloatingObject):
     """ A player-controlled ship that moves around the screen.
     
         Stereotypes:
@@ -12,6 +11,10 @@ class PlayerShip(FloatingObject, KeyboardControl):
         Attributes:
             NONE
     """
+    def __init__(self, filename, scale):
+        super().__init__(filename=filename, scale=scale)
+        self.is_shooting = False
+
 
     def update(self):
         """ Handles what happens on update
@@ -24,7 +27,6 @@ class PlayerShip(FloatingObject, KeyboardControl):
         self.move_y()
         self.check_bounds_x()
         self.check_bounds_y()
-        self.is_shooting = False
 
     def check_bounds_x(self):
         if self.left < 0:
