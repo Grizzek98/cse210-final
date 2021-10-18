@@ -139,18 +139,19 @@ class Director(arcade.Window):
         """
         # player - asteroids
         for asteroid in arcade.check_for_collision_with_list(self.player_ship_sprite, self.asteroid_sprite_list):
-            self.player_ship_sprite.hit_points -= asteroid.damage
+            self.player_ship_sprite.subtract_hit_points(asteroid.damage)
         # player - enemy projectiles
         for projectile in arcade.check_for_collision_with_list(self.player_ship_sprite, self.enemy_projectile_list):
-            self.player_ship_sprite.hit_points -= projectile.damage
+            self.player_ship_sprite.subtract_hit_points(projectile.damage)
         # player projectiles - asteroids
         for projectile in self.player_projectile_list:
             for asteroid in arcade.check_for_collision_with_list(projectile, self.asteroid_sprite_list):
-                asteroid.hit_points -= projectile.damage
+                asteroid.subtract_hit_points(projectile.damage)
         # player projectiles - enemy pro
         for player_projectile in self.player_projectile_list:
             for enemy_projectile in arcade.check_for_collision_with_list(player_projectile, self.enemy_projectile_list):
                 self.enemy_projectile_list.remove(enemy_projectile)
+                self.player_projectile_list.remove(player_projectile)
         # 
         # 
         # jectiles
