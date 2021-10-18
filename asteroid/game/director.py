@@ -2,6 +2,8 @@
 import arcade
 from os import path
 
+from pyglet.media import player
+
 # from arcade import sprite_list
 # from game import player_ship
 
@@ -43,7 +45,8 @@ class Director(arcade.Window):
         self.asteroid_sprite = None
         self.projectile_sprite = None
         self.keyboard_control = KeyboardControl()
-        self.projectile_list = None
+        self.player_projectile_list = None
+        self.enemy_projectile_list = None
 
     def setup(self):
         """ Handles the initial setup of the game.
@@ -52,7 +55,8 @@ class Director(arcade.Window):
                 self (Director): An instance of Director.
         """
         self.sprite_list = arcade.SpriteList()
-        self.projectile_list = arcade.SpriteList()
+        self.player_projectile_list = arcade.SpriteList()
+        self.enemy_projectile_list = arcade.SpriteList()
         self.asteroid_sprite_list = arcade.SpriteList()
 
         self.player_ship_sprite = PlayerShip(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "player_ship.png")), constants.SPRITE_SCALING)
@@ -76,9 +80,10 @@ class Director(arcade.Window):
             new_shot = Projectile(self.player_ship_sprite.center_x,
             self.player_ship_sprite.center_y,
             self.player_ship_sprite.angle)
-            self.projectile_list.append(new_shot)
+            self.player_projectile_list.append(new_shot)
             pass
-        self.projectile_list.update()
+        self.player_projectile_list.update()
+        self.check_collision()
         self.sprite_list.update() #<3 arcade
 
     def on_draw(self):
@@ -90,7 +95,8 @@ class Director(arcade.Window):
         arcade.start_render()
         self.sprite_list.draw()
         self.asteroid_sprite_list.draw()
-        self.projectile_list.draw()
+        self.player_projectile_list.draw()
+        self.enemy_projectile_list.draw()
 
 
     def on_key_press(self, key, modifiers):
@@ -123,7 +129,7 @@ class Director(arcade.Window):
         self.projectile_sprite = Projectile(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "projectile.png")), constants.SPRITE_SCALING)
         self.projectile_sprite.center_x = self.player_ship_sprite.center_x
         self.projectile_sprite.center_y = self.player_ship_sprite.center_y - 100
-        self.projectile_list.append(self.projectile_sprite)
+        self.player_projectile_list.append(self.projectile_sprite)
         
     def check_collision(self):
         """ Checks for collision between objects on the screen.
@@ -131,4 +137,20 @@ class Director(arcade.Window):
             Args:
                 self (Director): An instance of Director.
         """
-        pass
+        # player - asteroids
+        for asteroid in arcade.check_for_collision_with_list(self.player_ship_sprite, self.asteroid_sprite_list):
+            self.player_ship_sprite.hit_points -= asteroid.damage
+        # player - enemy projectiles
+        for projectile in arcade.check_for_collision_with_list(self.player_ship_sprite, self.enemy_projectile_list):
+            self.player_ship_sprite.hit_points -= projectile.damage
+        # player projectiles - asteroids
+        for projectile in self.player_projectile_list:
+            for asteroid in arcade.check_for_collision_with_list(projectile, self.asteroid_sprite_list):
+                asteroid.hit_points -= projectile.damage
+        # player projectiles - enemy pro
+        for player_projectile in self.player_projectile_list:
+            for enemy_projectile in arcade.check_for_collision_with_list(player_projectile, self.enemy_projectile_list):
+                self.enemy_projectile_list.remove(enemy_projectile)
+        # 
+        # 
+        # jectiles
