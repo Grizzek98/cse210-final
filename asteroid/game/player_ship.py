@@ -14,6 +14,7 @@ class PlayerShip(FloatingObject):
     def __init__(self, filename, scale):
         super().__init__(filename=filename, scale=scale)
         self.is_shooting = False
+        self.hit_points = 1
 
 
     def update(self):
@@ -49,3 +50,10 @@ class PlayerShip(FloatingObject):
             self.bottom = 0
         if self.top > constants.SCREEN_HEIGHT - 1:
             self.top = constants.SCREEN_HEIGHT
+    
+    def get_hit_points(self):
+       
+       return self.hit_points
+
+    def on_hit(self):
+        self.hit_points = self.hit_points - 1

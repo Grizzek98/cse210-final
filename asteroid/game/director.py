@@ -1,15 +1,17 @@
 
 import arcade
 from os import path
+from game import player_ship
 
 # from arcade import sprite_list
 # from game import player_ship
 
 from game import constants
 from game.player_ship import PlayerShip
-from game.asteroid import Asteroid
+from game.asteroid import *
 from game.keyboard_control import KeyboardControl
 from game.projectile import Projectile
+
 
 class Director(arcade.Window):
     """ The main controller class. Handles the flow of the program.
@@ -60,7 +62,7 @@ class Director(arcade.Window):
         self.player_ship_sprite.center_y = constants.SCREEN_HEIGHT / 2
         self.sprite_list.append(self.player_ship_sprite)
 
-        self.asteroid_sprite = Asteroid(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "asteroid.png")), constants.SPRITE_SCALING)
+        self.asteroid_sprite = SimpleAsteroid(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "asteroid.png")), constants.SPRITE_SCALING)
         self.asteroid_sprite.center_x = constants.SCREEN_WIDTH / 2 + 100
         self.asteroid_sprite.center_y = constants.SCREEN_HEIGHT / 2 + 100
         self.asteroid_sprite_list.append(self.asteroid_sprite)
@@ -80,6 +82,7 @@ class Director(arcade.Window):
             pass
         self.projectile_list.update()
         self.sprite_list.update() #<3 arcade
+        self.check_collision()
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
@@ -131,4 +134,20 @@ class Director(arcade.Window):
             Args:
                 self (Director): An instance of Director.
         """
-        pass
+        #Checks the collision between the ship and asteroids (Lose Game)
+        if arcade.check_for_collision_with_list(self.player_ship_sprite,self.asteroid_sprite_list):
+            self.player_ship_sprite.on_hit()
+            if self.player_ship_sprite.get_hit_points() == 0:
+                self.remove_from_screen(self.player_ship)
+                
+                
+            
+                   
+                    
+    def remove_from_screen(self, list):
+        """ Removes objects from the screen (and sprite_list).
+        """
+        self.sprite_list.remove(self.player_ship_sprite)
+
+    
+
