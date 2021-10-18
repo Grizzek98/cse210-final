@@ -11,6 +11,15 @@ class FloatingObject(arcade.Sprite):
             NONE
     """
 
+    def __init__(self, filename, scale):
+        super().__init__(filename=filename, scale=scale)
+        """ The class contructor.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
+        self.hit_points = None
+
     def update(self):
         """ Handles what the object does every update.
         
