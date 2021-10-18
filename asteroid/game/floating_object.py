@@ -57,3 +57,19 @@ class FloatingObject(arcade.Sprite):
             return True
         if self.bottom < 0:
             return False
+
+    def add_hit_points(self, amount):
+        """ Adds an amount to current hit_points.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
+        self.hit_points += amount
+
+    def subtract_hit_points(self, amount):
+        """ Subtracts an amount from current hit_points.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
+        self.hit_points -= amount
