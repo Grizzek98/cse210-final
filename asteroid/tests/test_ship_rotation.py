@@ -19,7 +19,15 @@ from game import constants
     (300, 90, 1),
     (0, 90, 1),
     (0, 270, -1),
-    (270, 180, -1)]
+    (270, 180, -1),
+    (333, 270, -1),
+    (333, 180, 1),
+    (111, 180, 1),
+    (100, 90, -1),
+    (200, 180, -1),
+    (200, 270, 1),
+    (50, 90, 1),
+    (50, 0, -1)]
 )
 def test_rotation_direction(angle, target, expected):
     test_ship = PlayerShip()
