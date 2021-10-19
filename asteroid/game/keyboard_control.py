@@ -89,6 +89,9 @@ class KeyboardControl():
             #any WASD
             ship.is_shooting = True
 
+        if key == arcade.key.ESCAPE:
+            arcade.exit()
+
     def key_release(self, key, ship, modifier=None):
         """ On key release controls
         
