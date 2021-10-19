@@ -70,14 +70,17 @@ class KeyboardControl():
             ship.change_angle = constants.PLAYER_ROTATION_SPEED * self._rotation_direction(ship)
 
         if key == arcade.key.LEFT:
-            ship.change_x = -constants.MOVEMENT_SPEED
+            ship.target_change_x = -constants.MOVEMENT_SPEED
+            ship.acceleration_x = -constants.PLAYER_ACCELERATION
         if key == arcade.key.RIGHT:
-            ship.change_x =  constants.MOVEMENT_SPEED
+            ship.target_change_x = constants.MOVEMENT_SPEED
+            ship.acceleration_x =  constants.PLAYER_ACCELERATION
         if key == arcade.key.UP:
-            ship.change_y =  constants.MOVEMENT_SPEED
+            ship.target_change_y = constants.MOVEMENT_SPEED
+            ship.acceleration_y =  constants.PLAYER_ACCELERATION
         if key == arcade.key.DOWN:
-            ship.change_y = -constants.MOVEMENT_SPEED
-            
+            ship.target_change_y = -constants.MOVEMENT_SPEED
+            ship.acceleration_y = -constants.PLAYER_ACCELERATION
         if key == arcade.key.SPACE:
             #TODO in a bullet hell, typically you can shoot and move in different directions
             #using arrow keys for movement and WASD for firing direction
@@ -95,10 +98,27 @@ class KeyboardControl():
                 ship (PlayerShip): a controllable ship
                 modifier (int): Any modifiers pressed with key.
         """
-        if key == arcade.key.LEFT or key == arcade.key.RIGHT:
-            ship.change_x = 0
-        if key == arcade.key.UP or key == arcade.key.DOWN:
-            ship.change_y = 0
+
+        #if a key is released and the ship is going the direction
+        #the key represents, reverse acceleration direcion.
+        #and set target_change to zero
+        if key == arcade.key.LEFT and ship.acceleration_x < 0 :
+            ship.acceleration_x *= -1
+            ship.target_change_x = 0
+        if key == arcade.key.RIGHT and ship.acceleration_x > 0 :
+            ship.acceleration_x *= -1
+            ship.target_change_x = 0
+        if key == arcade.key.DOWN and ship.acceleration_y < 0 :
+            ship.acceleration_y *= -1
+            ship.target_change_y = 0
+        if key == arcade.key.UP and ship.acceleration_y > 0 :
+            ship.acceleration_y *= -1
+            ship.target_change_y = 0
+
+        # if key == arcade.key.LEFT or key == arcade.key.RIGHT:
+        #     ship.change_x = 0
+        # if key == arcade.key.UP or key == arcade.key.DOWN:
+        #     ship.change_y = 0
 
         #TODO in a bullet hell, typically you can shoot and move in different directions
         #using arrow keys for movement and WASD for firing direction

@@ -21,7 +21,7 @@ SHIP_SPRITE_DIRECTORY = path.join(RESOURCE_DIRECTORY, path.join("PNG", "player_s
 MOVEMENT_SPEED = 10
 PLAYER_PROJECTILE_SPEED = 40
 PLAYER_ROTATION_SPEED = 5 #in degrees
-
+PLAYER_ACCELERATION = .01
 
 #orientation according to arcade sprites in degrees:
 SPRITE_UP = 0
