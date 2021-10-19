@@ -11,7 +11,7 @@ class PlayerShip(FloatingObject):
         Attributes:
             NONE
     """
-    def __init__(self, filename, scale, hit_points):
+    def __init__(self, filename, scale):
         super().__init__(filename=filename, scale=scale)
         self.is_shooting = False
 
