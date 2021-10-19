@@ -10,6 +10,18 @@ class FloatingObject(arcade.Sprite):
         Attributes:
    
     """
+
+
+    def __init__(self, filename, scale):
+        super().__init__(filename=filename, scale=scale)
+        """ The class contructor.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
+        self.hit_points = None
+        self.damage = None
+
     def update(self):
         """ Handles what the object does every update.
         
@@ -62,3 +74,27 @@ class FloatingObject(arcade.Sprite):
             return True
         if self.bottom < 0:
             return False
+
+    def get_hit_points(self):
+        """ Returns the current hit_points.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
+        return self.hit_points
+
+    def add_hit_points(self, amount):
+        """ Adds an amount to current hit_points.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
+        self.hit_points += amount
+
+    def subtract_hit_points(self, amount):
+        """ Subtracts an amount from current hit_points.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
+        self.hit_points -= amount
