@@ -11,6 +11,14 @@ class Asteroid(FloatingObject):
             NONE
     """
 
+    def __init__(self, filename, scale):
+        super().__init__(filename=filename, scale=scale)
+        """ The class constructor.
+        
+            Args: 
+                self (Asteroid): An instance of Asteroid.
+        """
+
     def update(self):
         """ Handles what happens on update
         

@@ -68,6 +68,7 @@ class Director(arcade.Window):
         self.asteroid_sprite = Asteroid(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "asteroid.png")), constants.SPRITE_SCALING)
         self.asteroid_sprite.center_x = constants.SCREEN_WIDTH / 2 + 100
         self.asteroid_sprite.center_y = constants.SCREEN_HEIGHT / 2 + 100
+        self.asteroid_sprite.damage = 50
         self.asteroid_sprite_list.append(self.asteroid_sprite)
 
     def on_update(self, delta_time):

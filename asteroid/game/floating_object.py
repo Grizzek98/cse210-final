@@ -19,6 +19,7 @@ class FloatingObject(arcade.Sprite):
                 self (FloatingObject): An instance of FloatingObject.
         """
         self.hit_points = None
+        self.damage = None
 
     def update(self):
         """ Handles what the object does every update.
@@ -66,6 +67,14 @@ class FloatingObject(arcade.Sprite):
             return True
         if self.bottom < 0:
             return False
+
+    def get_hit_points(self):
+        """ Returns the current hit_points.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
+        return self.hit_points
 
     def add_hit_points(self, amount):
         """ Adds an amount to current hit_points.
