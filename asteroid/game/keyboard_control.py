@@ -21,26 +21,62 @@ class KeyboardControl():
         Attributes: 
             None
     """
-    def key_press(self, key, sprite, modifier=None):
+    def _rotation_direction(self, ship):
+        """determines the direction of rotation that gets to target angle quickest
+        Returns 1 for clockwise, -1 for counterclockwise"""
+        angle = ship.angle
+        target = ship.target_angle
+        if target == 0: 
+            target = 360 #assumes circle from 0 exclusive - 360 inlcusive
+
+        #special cases. counter_clockwise and clockwise are equivelent these cases.
+        if angle == 180 and target == 90 :
+            return -1
+        if angle == 270 and target == 180:
+            return -1 
+        counter_clockwise = target #return 1
+        clockwise = target - 360 #return -1
+        if abs(angle - counter_clockwise) > abs(angle - clockwise):
+            return -1
+        else :
+            return 1
+
+        #relationship between positive and negative
+    # def _rotation_direction(self, ship):
+    #     """returns clockwise (1) counterclockwise (-1) depending on which is most expeditious
+
+    #         Args:
+    #             ship (PlayerShip): a controllabe ship
+    #     """
+    #     if (ship.angle > 180) and (ship.target_angle == 0): 
+    #         ship.target_angle = 360
+    #     if ship.angle <= ship.target_angle :
+    #         return 1
+    #     else :
+    #         return -1
+
+    def key_press(self, key, ship, modifier=None):
         """ On key press controls
         
             Args: 
                 self (KeyboardControl): An instance of KeyboardControl.
                 key (int): The key being pressed (uses arcade table).
-                sprite (Sprite): An arcade sprite.
+                ship (PlayerShip): a controllable ship
                 modifier (int): Any modifiers pressed with key.
         """
         if control_dict.get(key, None) is not None:
-            sprite.angle = control_dict.get(key)
-            #TODO shot code
+            ship.target_angle = control_dict.get(key)
+
+            ship.change_angle = constants.PLAYER_ROTATION_SPEED * self._rotation_direction(ship)
+
         if key == arcade.key.LEFT:
-            sprite.change_x = -constants.MOVEMENT_SPEED
+            ship.change_x = -constants.MOVEMENT_SPEED
         if key == arcade.key.RIGHT:
-            sprite.change_x =  constants.MOVEMENT_SPEED
+            ship.change_x =  constants.MOVEMENT_SPEED
         if key == arcade.key.UP:
-            sprite.change_y =  constants.MOVEMENT_SPEED
+            ship.change_y =  constants.MOVEMENT_SPEED
         if key == arcade.key.DOWN:
-            sprite.change_y = -constants.MOVEMENT_SPEED
+            ship.change_y = -constants.MOVEMENT_SPEED
             
         if key == arcade.key.SPACE:
             #TODO in a bullet hell, typically you can shoot and move in different directions
@@ -48,23 +84,21 @@ class KeyboardControl():
             #though having some time to rotation sounds pretty good. Probably a short time.
             #Let's keep this for now and see how it feels, but we may want to make auto-shoot on
             #any WASD
-            sprite.is_shooting = True
+            ship.is_shooting = True
 
-
-    def key_release(self, key, sprite, modifier=None):
+    def key_release(self, key, ship, modifier=None):
         """ On key release controls
         
             Args: 
                 self: An instance of KeyControl.
                 key (int): The key being pressed (uses arcade table).
-                sprite (Sprite): An arcade sprite.
+                ship (PlayerShip): a controllable ship
                 modifier (int): Any modifiers pressed with key.
         """
         if key == arcade.key.LEFT or key == arcade.key.RIGHT:
-            sprite.change_x = 0
+            ship.change_x = 0
         if key == arcade.key.UP or key == arcade.key.DOWN:
-            sprite.change_y = 0
-        #TODO shot code
+            ship.change_y = 0
 
         #TODO in a bullet hell, typically you can shoot and move in different directions
         #using arrow keys for movement and WASD for firing direction
@@ -72,5 +106,5 @@ class KeyboardControl():
         #Let's keep this for now and see how it feels, but we may want to make auto-shoot on
         #any WASD
         if key == arcade.key.SPACE:
-            sprite.is_shooting = False
+            ship.is_shooting = False
             pass

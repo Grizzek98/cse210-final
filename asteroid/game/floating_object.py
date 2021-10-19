@@ -8,8 +8,9 @@ class FloatingObject(arcade.Sprite):
             Information Holder
         
         Attributes:
-            NONE
+   
     """
+
 
     def __init__(self, filename, scale):
         super().__init__(filename=filename, scale=scale)
@@ -25,18 +26,24 @@ class FloatingObject(arcade.Sprite):
         """ Handles what the object does every update.
         
             Args: 
-                self (MovingSprite): An instance of MovingSprite.
+                self (FloatingObject): An instance of FloatingObject.
         """
+        self.rotate()
         self.move_x()
         self.move_y()
         self.check_bounds_x()
         self.check_bounds_y()
 
+    def rotate(self):
+        """Rotates the object according to self.change_angle
+            Assumes degrees"""
+        self.angle += self.change_angle
+        pass
     def move_x(self):
         """ Moves the object along the x axis.
         
             Args: 
-                self (MovingSprite): An instance of MovingSprite.
+                self (FloatingObject): An instance of FloatingObject.
         """
         self.center_x += self.change_x
 
@@ -44,7 +51,7 @@ class FloatingObject(arcade.Sprite):
         """ Moves the object along the y axis.
         
             Args:
-                self (MovingSprite): An instance of MovingSprite.
+                self (FloatingObject): An instance of FloatingObject.
         """
         self.center_y += self.change_y
 
@@ -52,7 +59,7 @@ class FloatingObject(arcade.Sprite):
         """ Checks if object is beyond x bounds.
         
             Args:
-                self (MovingSprite): An instance of MovingSprite.
+                self (FloatingObject): An instance of FloatingObject.
         """
         if self.left < 0 or self.right > constants.SCREEN_WIDTH - 1:
             return True
@@ -61,7 +68,7 @@ class FloatingObject(arcade.Sprite):
         """ Checks if object is beyond y bounds.
         
             Args:
-                self (MovingSprite): An instance of MovingSprite.
+                self (FloatingObject): An instance of FloatingObject.
         """
         if self.top > constants.SCREEN_HEIGHT - 1:
             return True
