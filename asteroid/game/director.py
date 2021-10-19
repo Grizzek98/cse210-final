@@ -72,7 +72,7 @@ class Director(arcade.Window):
         self.asteroid_sprite.damage = 50
         self.asteroid_sprite_list.append(self.asteroid_sprite)
 
-        self.shot_sound = path.join(constants.RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3"))
+        self.shot_sound = arcade.load_sound(path.join(constants.RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3")))
 
     def on_update(self, delta_time):
         """ Handles what happens every update.
@@ -86,7 +86,7 @@ class Director(arcade.Window):
             self.player_ship_sprite.center_y,
             self.player_ship_sprite.angle)
             self.player_projectile_list.append(new_shot)
-            arcade.play_sound(self.shot_sound)
+            self.play_shoot_sound()
             pass
         self.player_projectile_list.update()
         self.check_collision()
@@ -161,3 +161,8 @@ class Director(arcade.Window):
         # 
         # 
         # jectiles
+    def play_shoot_sound(self):
+        """Plays the shot sound effect when the player shoots
+            TODO
+        """
+        arcade.play_sound(self.shot_sound)
