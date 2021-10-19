@@ -102,8 +102,6 @@ class KeyboardControl():
         #if a key is released and the ship is going the direction
         #the key represents, reverse acceleration direcion.
         #and set target_change to zero
-        print(key, arcade.key.LEFT)
-        print(ship.acceleration_x)
         if key == arcade.key.LEFT and ship.acceleration_x < 0 :
             ship.acceleration_x *= -1
             ship.target_change_x = 0

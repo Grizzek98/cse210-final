@@ -89,7 +89,7 @@ class Director(arcade.Window):
             pass
         self.player_projectile_list.update()
         self.check_collision()
-        self.sprite_list.update() #<3 arcade
+        self.sprite_list.update() #TODO can't pass in delta_time like this. 
         self.check_remove_sprite()
 
     def on_draw(self):

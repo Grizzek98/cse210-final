@@ -46,10 +46,14 @@ class PlayerShip(FloatingObject):
     def _check_change_x(self):
         """checks if x velocity has reached target and
         returns True if x vel == target"""
-        # if self.change_x > constants.MOVEMENT_SPEED :
-        #     self.change_x = constants.MOVEMENT_SPEED
-        # elif self.change_x < -constants.MOVEMENT_SPEED :
-        #     self.change_x = -constants.MOVEMENT_SPEED
+
+        #if target x is zero, check to make sure 0 was not skipped
+        if self.target_change_x == 0:
+            if self.acceleration_x > 0 and self.change_x > 0:
+                self.change_x = 0
+            elif self.acceleration_x < 0 and self.change_x < 0:
+                self.change_x = 0
+        #
         if self.target_change_x == self.change_x :
             return True
         else :
@@ -58,10 +62,13 @@ class PlayerShip(FloatingObject):
     def _check_change_y(self):
         """checks if y velocity has reached target.
         returns True if x vel == target"""
-        # if self.change_y > constants.MOVEMENT_SPEED :
-        #     self.change_y = constants.MOVEMENT_SPEED
-        # elif self.change_y < -constants.MOVEMENT_SPEED :
-        #     self.change_y = -constants.MOVEMENT_SPEED
+
+        #if target y is zero, check to make sure 0 was not skiped
+        if self.target_change_y == 0:
+            if self.acceleration_y > 0 and self.change_y > 0:
+                self.change_y = 0
+            elif self.acceleration_y < 0 and self.change_y < 0:
+                self.change_y = 0
         if self.target_change_y == self.change_y :
             return True
         else :
@@ -70,6 +77,17 @@ class PlayerShip(FloatingObject):
     def _check_velocity_bounds(self):
         """check if velocity is out of bounds (greater than max)
         set velocity to max if it is out of bounds"""
+        if abs(self.change_x) > abs(constants.MOVEMENT_SPEED) :
+            if self.change_x > 0 :
+                self.change_x = constants.MOVEMENT_SPEED
+            else :
+                self.change_x = -constants.MOVEMENT_SPEED
+
+        if abs(self.change_y) > abs(constants.MOVEMENT_SPEED) :
+            if self.change_y > 0 :
+                self.change_y = constants.MOVEMENT_SPEED
+            else :
+                self.change_y = -constants.MOVEMENT_SPEED
         pass
 
     def _accelerate_x(self):
