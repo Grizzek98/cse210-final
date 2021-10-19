@@ -9,11 +9,13 @@ class PlayerShip(FloatingObject):
             Information Holder
         
         Attributes:
-            NONE
+            is_shooting (Bool), indictes if the ship is currently firing or not.
+            target_angle (float), the direction the ship is rotating towards. None if ship is not rotating
     """
-    def __init__(self, filename, scale, hit_points):
-        super().__init__(filename=filename, scale=scale)
+    def __init__(self, filename= constants.SHIP_SPRITE_DIRECTORY, scale= constants.SPRITE_SCALING):
+        super().__init__(filename= filename, scale= scale)
         self.is_shooting = False
+        self.target_angle = None
 
 
     def update(self):
@@ -22,11 +24,19 @@ class PlayerShip(FloatingObject):
             Args:
                 self (PlayerShip): An instance of PlayerShip.
         """
-        self.angle += self.change_angle
+        if self.angle == 360:
+            self.angle = 0
+        if self.angle < 0:
+            self.angle = 360 + self.angle
+        if self.target_angle == self.angle :
+            self.target_angle = None
+            self.change_angle = 0
+        self.rotate()
         self.move_x()
         self.move_y()
         self.check_bounds_x()
         self.check_bounds_y()
+
 
     def check_bounds_x(self):
         """ Checks whether object has reached the x boundary.

@@ -161,8 +161,8 @@ class Director(arcade.Window):
         # 
         # jectiles
 
-        def play_shoot_sound(self):
+    def play_shoot_sound(self):
             """Plays the shot sound effect when the player shoots
             TODO
             """
-            arcade.play_sound(self.shot_sound)
+        arcade.play_sound(self.shot_sound)
