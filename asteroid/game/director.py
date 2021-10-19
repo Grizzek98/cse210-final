@@ -82,8 +82,7 @@ class Director(arcade.Window):
                 delta_time (not sure): Describes the elapsed time between frames.
         """
         if self.player_ship_sprite.is_shooting:
-            new_shot = Projectile(self.player_ship_sprite.center_x,
-            self.player_ship_sprite.center_y,
+            new_shot = Projectile(self.player_ship_sprite.center_x, self.player_ship_sprite.center_y,
             self.player_ship_sprite.angle)
             self.player_projectile_list.append(new_shot)
             self.play_shoot_sound()
@@ -91,6 +90,7 @@ class Director(arcade.Window):
         self.player_projectile_list.update()
         self.check_collision()
         self.sprite_list.update() #<3 arcade
+        self.check_remove_sprite()
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
@@ -149,10 +149,12 @@ class Director(arcade.Window):
         # player - enemy projectiles
         for projectile in arcade.check_for_collision_with_list(self.player_ship_sprite, self.enemy_projectile_list):
             self.player_ship_sprite.subtract_hit_points(projectile.damage)
+            self.enemy_projectile_list.remove(projectile)
         # player projectiles - asteroids
         for projectile in self.player_projectile_list:
             for asteroid in arcade.check_for_collision_with_list(projectile, self.asteroid_sprite_list):
                 asteroid.subtract_hit_points(projectile.damage)
+                self.player_projectile_list.remove(projectile)
         # player projectiles - enemy pro
         for player_projectile in self.player_projectile_list:
             for enemy_projectile in arcade.check_for_collision_with_list(player_projectile, self.enemy_projectile_list):
@@ -161,8 +163,27 @@ class Director(arcade.Window):
         # 
         # 
         # jectiles
+
     def play_shoot_sound(self):
-        """Plays the shot sound effect when the player shoots
-            TODO
+            """ Plays the shot sound effect when the player shoots
+
+                Args:
+                    self (Director): An instance of Director.
+            """
+            arcade.play_sound(self.shot_sound)
+
+    def check_remove_sprite(self):
+        """ Checks whether a sprite should be remove from screen based on hit points.
+        
+            Args:
+                self (Director): An instance of Director.
         """
-        arcade.play_sound(self.shot_sound)
+        # remove dead player
+        for sprite in self.sprite_list:
+            if sprite.get_hit_points() <= 0:
+                self.sprite_list.remove(sprite)
+
+        # remove dead asteroids
+        for sprite in self.asteroid_sprite_list:
+            if sprite.get_hit_points() <= 0:
+                self.asteroid_sprite_list.remove(sprite)
