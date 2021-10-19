@@ -7,7 +7,7 @@ SPRITE_SCALING = 0.08
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-SCREEN_TITLE = "Batter - Group 07"
+SCREEN_TITLE = "Space Conquest - Group 07 Final Project"
 
 
 
