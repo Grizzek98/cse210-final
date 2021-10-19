@@ -12,15 +12,13 @@ SCREEN_TITLE = "Batter - Group 07"
 
 
 
-MOVEMENT_SPEED = 10
-
 ENEMY_SPEED = 10
 
 ANGLE_SPEED = 5
 
 #player constants
 SHIP_SPRITE_DIRECTORY = path.join(RESOURCE_DIRECTORY, path.join("PNG", "player_ship.png"))
-MOVEMENT_SPEED = 20
+MOVEMENT_SPEED = 10
 PLAYER_PROJECTILE_SPEED = 40
 PLAYER_ROTATION_SPEED = 5 #in degrees
 
