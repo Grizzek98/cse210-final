@@ -37,7 +37,6 @@ class PlayerShip(FloatingObject):
         self._check_velocity_bounds()
         self.check_bounds_x()
         self.check_bounds_y()
-        print("Update!")
 
 
     def check_bounds_x(self):
