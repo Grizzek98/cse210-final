@@ -178,6 +178,8 @@ class Director(arcade.View):
             Args:
                 self (Director): An instance of Director.
         """
+        ## remoce dead stuff
+
         # remove dead player
         for sprite in self.sprite_list:
             if sprite.get_hit_points() <= 0:
@@ -187,3 +189,20 @@ class Director(arcade.View):
         for sprite in self.asteroid_list:
             if sprite.get_hit_points() <= 0:
                 self.asteroid_list.remove(sprite)
+
+        ## remove out-of-bounds stuff
+
+        # remove gone asteroids
+        for sprite in self.asteroid_list:
+            if sprite.check_bounds_x() or sprite.check_bounds_y():
+                self.asteroid_list.remove(sprite)
+
+        # remove gone player_projectiles
+        for sprite in self.player_projectile_list:
+            if sprite.check_bounds_x() or sprite.check_bounds_y():
+                self.player_projectile_list.remove(sprite)
+
+        # remove gone enemy_projectiles
+        for sprite in self.enemy_projectile_list:
+            if sprite.check_bounds_x() or sprite.check_bounds_y():
+                self.enemy_projectile_list.remove(sprite)

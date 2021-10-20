@@ -1,5 +1,6 @@
 
 from game.floating_object import FloatingObject
+from game import constants
 
 class Asteroid(FloatingObject):
     """ A hunk of space rock (in addition to other elements) that try to make the player's ship have a bad day.
