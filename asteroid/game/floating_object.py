@@ -34,7 +34,7 @@ class FloatingObject(arcade.Sprite):
         self.acceleration_x = 0
         self.acceleration_y = 0
 
-    def update(self):
+    def on_update(self, delta_time):
         """ Handles what the object does every update.
         
             Args: 

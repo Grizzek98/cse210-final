@@ -19,7 +19,7 @@ class Asteroid(FloatingObject):
                 self (Asteroid): An instance of Asteroid.
         """
 
-    def update(self):
+    def on_update(self, delta_time):
         """ Handles what happens on update
         
             Args:
