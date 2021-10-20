@@ -10,11 +10,9 @@ class FloatingObject(arcade.Sprite):
         Attributes:
    
     """
-    def __init__(self, filename: str = None, scale: float = 1, image_x: float = 0, image_y: float = 0, image_width: float = 0, image_height: float = 0, center_x: float = 0, center_y: float = 0, repeat_count_x: int = 1, repeat_count_y: int = 1, flipped_horizontally: bool = False, flipped_vertically: bool = False, flipped_diagonally: bool = False, hit_box_algorithm: str = "Simple", hit_box_detail: float = 4.5, texture = None, angle: float = 0, hit_points = 100, damage = 100):
+    def __init__(self, filename: str = None, scale: float = 1, image_x: float = 0, image_y: float = 0, image_width: float = 0, image_height: float = 0, center_x: float = 0, center_y: float = 0, repeat_count_x: int = 1, repeat_count_y: int = 1, flipped_horizontally: bool = False, flipped_vertically: bool = False, flipped_diagonally: bool = False, hit_box_algorithm: str = "Simple", hit_box_detail: float = 4.5, texture = None, angle: float = 0,
+    hit_points= 100, damage= 100, acceleration_x= 0, acceleration_y= 0): #non Sprite args
         super().__init__(filename=filename, scale=scale, image_x=image_x, image_y=image_y, image_width=image_width, image_height=image_height, center_x=center_x, center_y=center_y, repeat_count_x=repeat_count_x, repeat_count_y=repeat_count_y, flipped_horizontally=flipped_horizontally, flipped_vertically=flipped_vertically, flipped_diagonally=flipped_diagonally, hit_box_algorithm=hit_box_algorithm, hit_box_detail=hit_box_detail, texture=texture, angle=angle)
-
-    # def __init__(self, filename, scale):
-    #     super().__init__(filename=filename, scale=scale)
         """ The class contructor.
         
             Args:
@@ -22,15 +20,18 @@ class FloatingObject(arcade.Sprite):
                 self (FloatingObject): An instance of FloatingObject.
                 hit_points (int) starting HP
                 damage (int) damage dealt on contact
+                acceleration_x (float) change in x velocity
+                acceperation_y (float) change in y velocity
+
         """
         self.hit_points = hit_points
         self.damage = damage
 
         #used to indicate a turn stop
-        self.target_angle = 0
+        self.target_angle = None
         #used for smooth accel/decceleration
-        self.target_change_x = 0
-        self.target_change_y = 0
+        self.target_change_x = None
+        self.target_change_y = None
         self.acceleration_x = 0
         self.acceleration_y = 0
 
@@ -161,14 +162,14 @@ class FloatingObject(arcade.Sprite):
     def _check_velocity_bounds(self):
         """check if velocity is out of bounds (greater than max)
         set velocity to max if it is out of bounds"""
-        if abs(self.change_x) > abs(constants.MOVEMENT_SPEED) :
-            if self.change_x > 0 :
+        if abs(self.change_x) > abs(constants.MOVEMENT_SPEED):
+            if self.change_x > 0:
                 self.change_x = constants.MOVEMENT_SPEED
             else :
                 self.change_x = -constants.MOVEMENT_SPEED
 
-        if abs(self.change_y) > abs(constants.MOVEMENT_SPEED) :
-            if self.change_y > 0 :
+        if abs(self.change_y) > abs(constants.MOVEMENT_SPEED):
+            if self.change_y > 0:
                 self.change_y = constants.MOVEMENT_SPEED
             else :
                 self.change_y = -constants.MOVEMENT_SPEED
