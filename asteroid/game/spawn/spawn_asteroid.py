@@ -30,7 +30,7 @@ class SpawnAsteroid:
                 self (SpawnAsteroid): An instance of SpawnAsteroid.
         """
         self._asteroid_list = arcade.SpriteList()
-        for x in range(random.randint(3, 10)):
+        for x in range(random.randint(3, 5)):
             self._asteroid_list.append(self.spawn())
         return self._asteroid_list
 
@@ -68,10 +68,10 @@ class SpawnAsteroid:
             Args:
                 self (SpawnAsteroid): An instance of SpawnAsteroid.
         """
-        self.asteroid.center_x = -10
+        self.asteroid.center_x = -5
         self.asteroid.center_y = random.randint(0, constants.SCREEN_HEIGHT - 1)
-        self.asteroid.change_x = random.randint(1, 10)
-        self.asteroid.change_y = random.randint(-10, 10)
+        self.asteroid.change_x = random.randint(1, 5)
+        self.asteroid.change_y = random.randint(-5, 5)
 
     def _random_right_start(self):
         """ Sets a random position and velocity for object on right side of screen.
@@ -79,10 +79,10 @@ class SpawnAsteroid:
             Args:
                 self (SpawnAsteroid): An instance of SpawnAsteroid.
         """
-        self.asteroid.center_x = constants.SCREEN_WIDTH + 10
+        self.asteroid.center_x = constants.SCREEN_WIDTH + 5
         self.asteroid.center_y = random.randint(0, constants.SCREEN_HEIGHT)
-        self.asteroid.change_x = random.randint(-10, -1)
-        self.asteroid.change_y = random.randint(-10, 10)
+        self.asteroid.change_x = random.randint(-5, -1)
+        self.asteroid.change_y = random.randint(-5, 5)
 
     def _random_top_start(self):
         """ Sets a random position and velocity for object on top of screen.
@@ -91,9 +91,9 @@ class SpawnAsteroid:
                 self (SpawnAsteroid): An instance of SpawnAsteroid.
         """
         self.asteroid.center_x = random.randint(0, constants.SCREEN_WIDTH)
-        self.asteroid.center_y = constants.SCREEN_HEIGHT + 10
-        self.asteroid.change_x = random.randint(-10, 10)
-        self.asteroid.change_y = random.randint(-10, -1)
+        self.asteroid.center_y = constants.SCREEN_HEIGHT + 5
+        self.asteroid.change_x = random.randint(-5, 5)
+        self.asteroid.change_y = random.randint(-5, -1)
 
     def _random_bottom_start(self):
         """ Sets a random position and velocity for object on bottom of screen.
@@ -102,6 +102,6 @@ class SpawnAsteroid:
                 self (SpawnAsteroid): An instance of SpawnAsteroid.
         """
         self.asteroid.center_x = random.randint(0, constants.SCREEN_WIDTH)
-        self.asteroid.center_y = -10
-        self.asteroid.change_x = random.randint(-10, 10)
-        self.asteroid.change_y = random.randint(1, 10)
+        self.asteroid.center_y = -5
+        self.asteroid.change_x = random.randint(-5, 5)
+        self.asteroid.change_y = random.randint(1, 5)
