@@ -87,10 +87,10 @@ class Director(arcade.View):
             self.player_projectile_list.append(new_shot)
             self.play_shoot_sound()
         self.player_projectile_list.on_update(delta_time)
-        self.check_collision()
         self.sprite_list.on_update(delta_time) #<3 arcade
+        self.asteroid_list.on_update(delta_time)
+        self.check_collision()
         self.check_remove_sprite()
-        self.asteroid_sprite_list.on_update(delta_time)
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.

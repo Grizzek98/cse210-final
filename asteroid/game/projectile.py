@@ -9,7 +9,9 @@ class Projectile(FloatingObject):
         self, an instance of Projectile
         center_x, starting position of sprite
         center_y, starting position of sprite
-        angle, starting orientation of sprite"""
+        angle, starting orientation of sprite
+    """
+    
     def __init__(self, center_x, center_y, angle, speed=constants.PLAYER_PROJECTILE_SPEED):
         super().__init__(filename= path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "projectile.png")),
         scale= constants.PROJECTILE_SCALE,
