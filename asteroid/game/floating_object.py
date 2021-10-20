@@ -48,10 +48,13 @@ class FloatingObject(arcade.Sprite):
         self.check_bounds_y()
 
     def rotate(self):
-        """Rotates the object according to self.change_angle
-            Assumes degrees"""
+        """ Rotates the object according to self.change_angle. Assumes degrees
+            
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
         self.angle += self.change_angle
-        pass
+        
     def move_x(self):
         """ Moves the object along the x axis.
         
@@ -111,25 +114,35 @@ class FloatingObject(arcade.Sprite):
         self.hit_points -= amount
 
     def _rectify_angle(self):
-        """checks to make sure angle is between 0 inclusive and 360 exclusive
-        and alters angle if needed."""
+        """ Checks to make sure angle is between 0 inclusive and 360 exclusive
+            and alters angle if needed.
+            
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
         if self.angle == 360:
             self.angle = 0
         if self.angle < 0:
             self.angle = 360 + self.angle
 
     def _check_angle(self):
-        """checks if current angle has reached target angle and
-        updates change_angle and if needed
+        """ Checks if current angle has reached target angle and
+            updates change_angle and if needed.
+
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
         """
         if self.target_angle == self.angle :
             self.target_angle = None #BUG probably target angle doesn't need to change
             self.change_angle = 0
 
     def _check_change_x(self):
-        """checks if x velocity has reached target and
-        returns True if x vel == target"""
-
+        """ Checks if x velocity has reached target and
+            returns True if x vel == target.
+            
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
         #if target x is zero, check to make sure 0 was not skipped
         if self.target_change_x == 0:
             if self.acceleration_x > 0 and self.change_x > 0:
@@ -143,9 +156,12 @@ class FloatingObject(arcade.Sprite):
             return False
 
     def _check_change_y(self):
-        """checks if y velocity has reached target.
-        returns True if x vel == target"""
-
+        """ Checks if y velocity has reached target.
+            returns True if x vel == target.
+            
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
         #if target y is zero, check to make sure 0 was not skiped
         if self.target_change_y == 0:
             if self.acceleration_y > 0 and self.change_y > 0:
@@ -158,8 +174,12 @@ class FloatingObject(arcade.Sprite):
             return False
 
     def _check_velocity_bounds(self):
-        """check if velocity is out of bounds (greater than max)
-        set velocity to max if it is out of bounds"""
+        """ Check if velocity is out of bounds (greater than max)
+            set velocity to max if it is out of bounds.
+            
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
         if abs(self.change_x) > abs(constants.MOVEMENT_SPEED):
             if self.change_x > 0:
                 self.change_x = constants.MOVEMENT_SPEED
@@ -174,9 +194,17 @@ class FloatingObject(arcade.Sprite):
         pass
 
     def _accelerate_x(self):
-        """add accel x to change x"""
+        """ Add accel x to change x.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
         self.change_x += self.acceleration_x
     
     def _accelerate_y(self):
-        """add accel y to change y"""
+        """ Add accel y to change y.
+        
+            Args:
+                self (FloatingObject): An instance of FloatingObject.
+        """
         self.change_y += self.acceleration_y
