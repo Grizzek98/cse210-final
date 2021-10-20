@@ -126,7 +126,7 @@ class Director(arcade.Window):
         """
         self.keyboard_control.key_release(key, self.player_ship_sprite)
     
-    def shot(self):
+    def shot(self): #TODO create constructor returning new shots
         """Creates a projectile
 
         Args:
