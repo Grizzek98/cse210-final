@@ -18,8 +18,8 @@ class FloatingObject(arcade.Sprite):
         """ The class contructor.
         
             Args:
+                all arcade.Sprite params
                 self (FloatingObject): An instance of FloatingObject.
-                all sprite params
                 hit_points (int) starting HP
                 damage (int) damage dealt on contact
         """

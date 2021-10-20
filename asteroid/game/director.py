@@ -6,7 +6,7 @@ from pyglet.media import player
 
 # from arcade import sprite_list
 # from game import player_ship
-
+from game import spawn
 from game import constants
 from game.player_ship import PlayerShip
 from game.asteroid import Asteroid
@@ -21,7 +21,7 @@ class Director(arcade.Window):
         
         Attributes:
             sprite_list (list): A list of sprites on-screen.
-            asteroid_sprite_list (list): A list of asteroid sprites on-screen.
+            asteroid_list (list): A list of asteroid sprites on-screen.
             player_ship_sprite (arcade.Sprite): A player_controlled ship sprite object.
             asteroid (arcade.Sprite): An asteroid sprite object.
             projectile_sprite (arcade.Sprite): An instance of a projectile on-screen.
@@ -40,14 +40,16 @@ class Director(arcade.Window):
         super().__init__(width, height, title)
         arcade.set_background_color(arcade.color.BLUE_GREEN)
         self.sprite_list = None
-        self.asteroid_sprite_list = None
+        self.asteroid_list = None
         self.player_ship_sprite = None
-        self.asteroid_sprite = None
         self.projectile_sprite = None
         self.keyboard_control = KeyboardControl()
         self.player_projectile_list = None
         self.enemy_projectile_list = None
         self.shot_sound = arcade.load_sound(path.join(constants.RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3")))
+        self.spawn_player = spawn.SpawnPlayer()
+        self.spawn_enemy = spawn.SpawnEnemy()
+        self.spawn_asteroid = spawn.SpawnAsteroid()
 
     def setup(self):
         """ Handles the initial setup of the game.
@@ -58,19 +60,14 @@ class Director(arcade.Window):
         self.sprite_list = arcade.SpriteList()
         self.player_projectile_list = arcade.SpriteList()
         self.enemy_projectile_list = arcade.SpriteList()
-        self.asteroid_sprite_list = arcade.SpriteList()
+        self.asteroid_list = arcade.SpriteList()
 
-        self.player_ship_sprite = PlayerShip(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "player_ship.png")), constants.SPRITE_SCALING)
-        self.player_ship_sprite.center_x = constants.SCREEN_WIDTH / 2
-        self.player_ship_sprite.center_y = constants.SCREEN_HEIGHT / 2
-        self.player_ship_sprite.hit_points = 100
+        self.player_ship_sprite = self.spawn_player.spawn()
         self.sprite_list.append(self.player_ship_sprite)
+        self.asteroid_list.extend(self.spawn_asteroid.setup())
 
-        self.asteroid_sprite = Asteroid(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "asteroid.png")), constants.SPRITE_SCALING)
-        self.asteroid_sprite.center_x = constants.SCREEN_WIDTH / 2 + 100
-        self.asteroid_sprite.center_y = constants.SCREEN_HEIGHT / 2 + 100
-        self.asteroid_sprite.damage = 50
-        self.asteroid_sprite_list.append(self.asteroid_sprite)
+        # self.asteroid = self.spawn_asteroid.spawn()
+        # self.asteroid_list.append(self.asteroid)
 
         # self.shot_sound = arcade.load_sound(path.join(constants.RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3")))
 
@@ -91,6 +88,7 @@ class Director(arcade.Window):
         self.check_collision()
         self.sprite_list.update() #<3 arcade
         self.check_remove_sprite()
+        self.asteroid_list.update()
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
@@ -100,7 +98,7 @@ class Director(arcade.Window):
         """
         arcade.start_render()
         self.sprite_list.draw()
-        self.asteroid_sprite_list.draw()
+        self.asteroid_list.draw()
         self.player_projectile_list.draw()
         self.enemy_projectile_list.draw()
 
@@ -144,7 +142,7 @@ class Director(arcade.Window):
                 self (Director): An instance of Director.
         """
         # player - asteroids
-        for asteroid in arcade.check_for_collision_with_list(self.player_ship_sprite, self.asteroid_sprite_list):
+        for asteroid in arcade.check_for_collision_with_list(self.player_ship_sprite, self.asteroid_list):
             self.player_ship_sprite.subtract_hit_points(asteroid.damage)
         # player - enemy projectiles
         for projectile in arcade.check_for_collision_with_list(self.player_ship_sprite, self.enemy_projectile_list):
@@ -152,7 +150,7 @@ class Director(arcade.Window):
             self.enemy_projectile_list.remove(projectile)
         # player projectiles - asteroids
         for projectile in self.player_projectile_list:
-            for asteroid in arcade.check_for_collision_with_list(projectile, self.asteroid_sprite_list):
+            for asteroid in arcade.check_for_collision_with_list(projectile, self.asteroid_list):
                 asteroid.subtract_hit_points(projectile.damage)
                 self.player_projectile_list.remove(projectile)
         # player projectiles - enemy pro
@@ -184,6 +182,6 @@ class Director(arcade.Window):
                 self.sprite_list.remove(sprite)
 
         # remove dead asteroids
-        for sprite in self.asteroid_sprite_list:
+        for sprite in self.asteroid_list:
             if sprite.get_hit_points() <= 0:
-                self.asteroid_sprite_list.remove(sprite)
+                self.asteroid_list.remove(sprite)

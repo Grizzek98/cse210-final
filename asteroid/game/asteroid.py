@@ -25,3 +25,6 @@ class Asteroid(FloatingObject):
             Args:
                 self (Asteroid): An instance of Asteroid.
         """
+        self.rotate()
+        self.move_x()
+        self.move_y()

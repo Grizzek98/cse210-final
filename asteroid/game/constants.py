@@ -32,3 +32,6 @@ SPRITE_RIGHT = 270
 #projectile
 PROJECTILE_SCALE = .05
 ENEMY_PROJECTILE_SPEED = 25
+
+#asteroid
+ASTEROID_SPRITE_DIRECTORY = path.join(RESOURCE_DIRECTORY, path.join("PNG", "asteroid.png"))
