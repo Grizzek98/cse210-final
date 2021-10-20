@@ -15,25 +15,26 @@ class PlayerShip(FloatingObject):
     def __init__(self, filename= constants.SHIP_SPRITE_DIRECTORY, scale= constants.SPRITE_SCALING):
         super().__init__(filename= filename, scale= scale)
         self.is_shooting = False
-        self.target_angle = None
-
-
+        
     def update(self):
         """ Handles what happens on update
         
             Args:
                 self (PlayerShip): An instance of PlayerShip.
         """
-        if self.angle == 360:
-            self.angle = 0
-        if self.angle < 0:
-            self.angle = 360 + self.angle
-        if self.target_angle == self.angle :
-            self.target_angle = None
-            self.change_angle = 0
+        if not self._check_change_x():
+            self._accelerate_x()
+            pass
+
+        if not self._check_change_y():
+            self._accelerate_y()
+            pass
+        self._rectify_angle()
+        self._check_angle()
         self.rotate()
         self.move_x()
         self.move_y()
+        self._check_velocity_bounds()
         self.check_bounds_x()
         self.check_bounds_y()
 

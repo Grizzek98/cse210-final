@@ -4,6 +4,7 @@ from os import path
 
 from pyglet.media import player
 
+
 # from arcade import sprite_list
 # from game import player_ship
 
@@ -13,7 +14,8 @@ from game.asteroid import Asteroid
 from game.keyboard_control import KeyboardControl
 from game.projectile import Projectile
 
-class Director(arcade.Window):
+
+class Director(arcade.View):
     """ The main controller class. Handles the flow of the program.
     
         Stereotypes:
@@ -28,7 +30,7 @@ class Director(arcade.Window):
             keyboard_control (KeyboardControl): An instance of KeyboardControl.
     """
 
-    def __init__(self, width, height, title):
+    def __init__(self):
         """ The constructor of the class. Initializes the classes attributes and opens the arcade window.
         
             Args:
@@ -37,7 +39,8 @@ class Director(arcade.Window):
                 height (constant): The height of the arcade screen.
                 title (constant): The title of the arcade screen.
         """
-        super().__init__(width, height, title)
+        super().__init__()
+        self.window.set_mouse_visible(False)
         arcade.set_background_color(arcade.color.BLUE_GREEN)
         self.sprite_list = None
         self.asteroid_sprite_list = None

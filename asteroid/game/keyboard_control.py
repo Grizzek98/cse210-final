@@ -7,11 +7,7 @@ control_dict = { #dict belongs outside so it doesn't have to get constructed eve
     arcade.key.S: constants.SPRITE_DOWN,
     arcade.key.D: constants.SPRITE_RIGHT,
 }
-#     arcade.key.UP: "up",
-#     arcade.key.LEFT: "left",
-#     arcade.key.DOWN: "down",
-#     arcade.key.RIGHT: "right"
-# }
+
 class KeyboardControl():
     """ Contains the methods for controlling objects needing keyboard control
 
@@ -55,7 +51,7 @@ class KeyboardControl():
     #     else :
     #         return -1
 
-    def key_press(self, key, ship, modifier=None):
+    def key_press(self, key, ship = None, modifier=None):
         """ On key press controls
         
             Args: 
@@ -70,14 +66,17 @@ class KeyboardControl():
             ship.change_angle = constants.PLAYER_ROTATION_SPEED * self._rotation_direction(ship)
 
         if key == arcade.key.LEFT:
-            ship.change_x = -constants.MOVEMENT_SPEED
+            ship.target_change_x = -constants.MOVEMENT_SPEED
+            ship.acceleration_x = -constants.PLAYER_ACCELERATION
         if key == arcade.key.RIGHT:
-            ship.change_x =  constants.MOVEMENT_SPEED
+            ship.target_change_x = constants.MOVEMENT_SPEED
+            ship.acceleration_x =  constants.PLAYER_ACCELERATION
         if key == arcade.key.UP:
-            ship.change_y =  constants.MOVEMENT_SPEED
+            ship.target_change_y = constants.MOVEMENT_SPEED
+            ship.acceleration_y =  constants.PLAYER_ACCELERATION
         if key == arcade.key.DOWN:
-            ship.change_y = -constants.MOVEMENT_SPEED
-            
+            ship.target_change_y = -constants.MOVEMENT_SPEED
+            ship.acceleration_y = -constants.PLAYER_ACCELERATION
         if key == arcade.key.SPACE:
             #TODO in a bullet hell, typically you can shoot and move in different directions
             #using arrow keys for movement and WASD for firing direction
@@ -85,6 +84,9 @@ class KeyboardControl():
             #Let's keep this for now and see how it feels, but we may want to make auto-shoot on
             #any WASD
             ship.is_shooting = True
+
+        if key == arcade.key.ESCAPE:
+            self.exit_game()
 
     def key_release(self, key, ship, modifier=None):
         """ On key release controls
@@ -95,10 +97,27 @@ class KeyboardControl():
                 ship (PlayerShip): a controllable ship
                 modifier (int): Any modifiers pressed with key.
         """
-        if key == arcade.key.LEFT or key == arcade.key.RIGHT:
-            ship.change_x = 0
-        if key == arcade.key.UP or key == arcade.key.DOWN:
-            ship.change_y = 0
+
+        #if a key is released and the ship is going the direction
+        #the key represents, reverse acceleration direcion.
+        #and set target_change to zero
+        if key == arcade.key.LEFT and ship.acceleration_x < 0 :
+            ship.acceleration_x *= -1
+            ship.target_change_x = 0
+        if key == arcade.key.RIGHT and ship.acceleration_x > 0 :
+            ship.acceleration_x *= -1
+            ship.target_change_x = 0
+        if key == arcade.key.DOWN and ship.acceleration_y < 0 :
+            ship.acceleration_y *= -1
+            ship.target_change_y = 0
+        if key == arcade.key.UP and ship.acceleration_y > 0 :
+            ship.acceleration_y *= -1
+            ship.target_change_y = 0
+
+        # if key == arcade.key.LEFT or key == arcade.key.RIGHT:
+        #     ship.change_x = 0
+        # if key == arcade.key.UP or key == arcade.key.DOWN:
+        #     ship.change_y = 0
 
         #TODO in a bullet hell, typically you can shoot and move in different directions
         #using arrow keys for movement and WASD for firing direction
@@ -108,3 +127,6 @@ class KeyboardControl():
         if key == arcade.key.SPACE:
             ship.is_shooting = False
             pass
+        
+    def exit_game(self):
+        arcade.exit()
