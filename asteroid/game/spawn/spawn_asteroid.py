@@ -4,8 +4,9 @@ from game import constants
 import random
 import arcade
 
+
 class SpawnAsteroid:
-    """ Handles the spawning of asteroid objects.
+    """ Handles the spawning of asteroid objects. TODO add an asteroid max velocity constant TODO
     
         Stereotypes:
             Information Holder
