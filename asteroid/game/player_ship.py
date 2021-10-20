@@ -16,7 +16,7 @@ class PlayerShip(FloatingObject):
         super().__init__(filename= filename, scale= scale)
         self.is_shooting = False
         
-    def update(self):
+    def on_update(self, delta_time):
         """ Handles what happens on update
         
             Args:

@@ -16,8 +16,8 @@ class FloatingObject(arcade.Sprite):
         """ The class contructor.
         
             Args:
+                all arcade.Sprite params
                 self (FloatingObject): An instance of FloatingObject.
-                all sprite params
                 hit_points (int) starting HP
                 damage (int) damage dealt on contact
                 acceleration_x (float) change in x velocity
@@ -35,7 +35,7 @@ class FloatingObject(arcade.Sprite):
         self.acceleration_x = 0
         self.acceleration_y = 0
 
-    def update(self):
+    def on_update(self, delta_time):
         """ Handles what the object does every update.
         
             Args: 
