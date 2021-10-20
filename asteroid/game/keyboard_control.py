@@ -7,11 +7,7 @@ control_dict = { #dict belongs outside so it doesn't have to get constructed eve
     arcade.key.S: constants.SPRITE_DOWN,
     arcade.key.D: constants.SPRITE_RIGHT,
 }
-#     arcade.key.UP: "up",
-#     arcade.key.LEFT: "left",
-#     arcade.key.DOWN: "down",
-#     arcade.key.RIGHT: "right"
-# }
+
 class KeyboardControl():
     """ Contains the methods for controlling objects needing keyboard control
 
@@ -55,7 +51,7 @@ class KeyboardControl():
     #     else :
     #         return -1
 
-    def key_press(self, key, ship, modifier=None):
+    def key_press(self, key, ship = None, modifier=None):
         """ On key press controls
         
             Args: 
@@ -87,7 +83,7 @@ class KeyboardControl():
             ship.is_shooting = True
 
         if key == arcade.key.ESCAPE:
-            arcade.exit()
+            self.exit_game()
 
     def key_release(self, key, ship, modifier=None):
         """ On key release controls
@@ -111,3 +107,6 @@ class KeyboardControl():
         if key == arcade.key.SPACE:
             ship.is_shooting = False
             pass
+        
+    def exit_game(self):
+        arcade.exit()

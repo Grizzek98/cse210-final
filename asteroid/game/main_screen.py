@@ -1,11 +1,15 @@
 import arcade
 from os import path
+from game.keyboard_control import KeyboardControl
 from game import constants
 from game.director import Director
 
 
 class MainScreen(arcade.View):
-
+    """"""
+    def __init__(self):
+        super().__init__()
+        self.keyboard_control = KeyboardControl()
     
     def on_show(self):
         """ This is run once when we switch to this view """
@@ -26,3 +30,6 @@ class MainScreen(arcade.View):
         game_view = Director()
         game_view.setup()
         self.window.show_view(game_view)
+    
+    def on_key_press(self, key, modifier):
+        self.keyboard_control.key_press(key)
