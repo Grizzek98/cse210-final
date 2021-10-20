@@ -75,7 +75,7 @@ class Director(arcade.Window):
         # self.shot_sound = arcade.load_sound(path.join(constants.RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3")))
 
     def on_update(self, delta_time):
-        """ Handles what happens every update.
+        """ Handles what happens every arcade update.
         
             Args:
                 self (Director): An instance of Director.
@@ -86,11 +86,11 @@ class Director(arcade.Window):
             self.player_ship_sprite.angle)
             self.player_projectile_list.append(new_shot)
             self.play_shoot_sound()
-            pass
-        self.player_projectile_list.update()
+        self.player_projectile_list.on_update(delta_time)
         self.check_collision()
-        self.sprite_list.update() #<3 arcade
+        self.sprite_list.on_update(delta_time) #<3 arcade
         self.check_remove_sprite()
+        self.asteroid_sprite_list.on_update(delta_time)
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
