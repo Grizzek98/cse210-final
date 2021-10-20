@@ -74,7 +74,7 @@ class FloatingObject(arcade.Sprite):
             Args:
                 self (FloatingObject): An instance of FloatingObject.
         """
-        if self.left < 0 or self.right > constants.SCREEN_WIDTH - 1:
+        if self.left < 0 - (constants.SCREEN_WIDTH * 0.3) or self.right > constants.SCREEN_WIDTH + (constants.SCREEN_WIDTH * 1.3):
             return True
     
     def check_bounds_y(self):
@@ -83,10 +83,8 @@ class FloatingObject(arcade.Sprite):
             Args:
                 self (FloatingObject): An instance of FloatingObject.
         """
-        if self.top > constants.SCREEN_HEIGHT - 1:
+        if self.top > constants.SCREEN_HEIGHT + (constants.SCREEN_HEIGHT * 0.3) or self.bottom < 0 - (constants.SCREEN_HEIGHT * 0.3):
             return True
-        if self.bottom < 0:
-            return False
 
     def get_hit_points(self):
         """ Returns the current hit_points.
