@@ -12,7 +12,7 @@ SCREEN_TITLE = "Space Conquest - Group 07 Final Project"
 
 
 
-ENEMY_SPEED = 10
+ENEMY_SPEED = 5
 
 ANGLE_SPEED = 5
 
@@ -37,3 +37,11 @@ ENEMY_PROJECTILE_SPEED = 25
 
 #asteroid
 ASTEROID_SPRITE_DIRECTORY = path.join(RESOURCE_DIRECTORY, path.join("PNG", "asteroid.png"))
+
+#backgrounds
+MAIN_MENU_BG = path.join(RESOURCE_DIRECTORY, path.join("PNG", "main_menu.png"))
+SPACE_BG = path.join(RESOURCE_DIRECTORY, path.join("PNG", "space_bg.png"))
+
+#Sound Effects
+BG_MUSIC = path.join(RESOURCE_DIRECTORY, path.join("ST", "bg_music.mp3"))
+SHOT_SOUND = path.join(RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3"))

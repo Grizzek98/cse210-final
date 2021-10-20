@@ -41,7 +41,7 @@ class Director(arcade.View):
         """
         super().__init__()
         self.window.set_mouse_visible(False)
-        arcade.set_background_color(arcade.color.BLUE_GREEN)
+        self.texture = arcade.load_texture(constants.SPACE_BG)
         self.sprite_list = None
         self.asteroid_list = None
         self.player_ship_sprite = None
@@ -49,7 +49,7 @@ class Director(arcade.View):
         self.keyboard_control = KeyboardControl()
         self.player_projectile_list = None
         self.enemy_projectile_list = None
-        self.shot_sound = arcade.load_sound(path.join(constants.RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3")))
+        self.shot_sound = arcade.load_sound(constants.SHOT_SOUND)
         self.spawn_player = spawn.SpawnPlayer()
         self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
@@ -99,10 +99,13 @@ class Director(arcade.View):
                 self (Director): An instance of Director.
         """
         arcade.start_render()
+        self.texture.draw_sized(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2,
+        constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT)
         self.sprite_list.draw()
         self.asteroid_list.draw()
         self.player_projectile_list.draw()
         self.enemy_projectile_list.draw()
+        
 
 
     def on_key_press(self, key, modifiers):
