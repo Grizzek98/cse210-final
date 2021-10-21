@@ -15,6 +15,8 @@ from game.keyboard_control import KeyboardControl
 from game.projectile import Projectile
 from game.score import Score
 from game.script import GameScript
+from game.collision import Collision
+
 
 
 class Director(arcade.View):
@@ -26,7 +28,7 @@ class Director(arcade.View):
         Attributes:
             sprite_list (list): A list of sprites on-screen.
             asteroid_list (list): A list of asteroid sprites on-screen.
-            player_ship_sprite (arcade.Sprite): A player_controlled ship sprite object.
+            player_ship (arcade.Sprite): A player_controlled ship sprite object.
             asteroid (arcade.Sprite): An asteroid sprite object.
             projectile_sprite (arcade.Sprite): An instance of a projectile on-screen.
             keyboard_control (KeyboardControl): An instance of KeyboardControl.
@@ -46,7 +48,7 @@ class Director(arcade.View):
         self.texture = arcade.load_texture(constants.SPACE_BG)
         self.sprite_list = None
         self.asteroid_list = None
-        self.player_ship_sprite = None
+        self.player_ship = None
         self.projectile_sprite = None
         self.keyboard_control = KeyboardControl()
         self.player_projectile_list = None
@@ -55,8 +57,11 @@ class Director(arcade.View):
         self.spawn_player = spawn.SpawnPlayer()
         self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
+
         self.score = Score()
         self.script = GameScript()
+        self.collision = Collision()
+
 
 
     def setup(self):
@@ -70,8 +75,8 @@ class Director(arcade.View):
         self.enemy_projectile_list = arcade.SpriteList()
         self.asteroid_list = arcade.SpriteList()
 
-        self.player_ship_sprite = self.spawn_player.spawn()
-        self.sprite_list.append(self.player_ship_sprite)
+        self.player_ship = self.spawn_player.spawn()
+        self.sprite_list.append(self.player_ship)
         self.asteroid_list.extend(self.spawn_asteroid.setup())
 
         # self.asteroid = self.spawn_asteroid.spawn()
@@ -86,9 +91,9 @@ class Director(arcade.View):
                 self (Director): An instance of Director.
                 delta_time (not sure): Describes the elapsed time between frames.
         """
-        if self.player_ship_sprite.is_shooting:
-            new_shot = Projectile(self.player_ship_sprite.center_x, self.player_ship_sprite.center_y,
-            self.player_ship_sprite.angle)
+        if self.player_ship.is_shooting:
+            new_shot = Projectile(self.player_ship.center_x, self.player_ship.center_y,
+            self.player_ship.angle)
             self.player_projectile_list.append(new_shot)
             self.play_shoot_sound()
 
@@ -128,7 +133,7 @@ class Director(arcade.View):
                 key (input): A key pressed by the user.
                 BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
-        self.keyboard_control.key_press(key, self.player_ship_sprite)  
+        self.keyboard_control.key_press(key, self.player_ship)  
 
 
     def on_key_release(self, key, modifiers):
@@ -139,7 +144,7 @@ class Director(arcade.View):
                 key (input): A key pressed by the user.
                 BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
-        self.keyboard_control.key_release(key, self.player_ship_sprite)
+        self.keyboard_control.key_release(key, self.player_ship)
     
     def shot(self): #TODO create constructor returning new shots
         """Creates a projectile
@@ -148,8 +153,8 @@ class Director(arcade.View):
             self (Director): An instance of Director.
     """
         self.projectile_sprite = Projectile(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "projectile.png")), constants.SPRITE_SCALING)
-        self.projectile_sprite.center_x = self.player_ship_sprite.center_x
-        self.projectile_sprite.center_y = self.player_ship_sprite.center_y - 100
+        self.projectile_sprite.center_x = self.player_ship.center_x
+        self.projectile_sprite.center_y = self.player_ship.center_y - 100
         self.player_projectile_list.append(self.projectile_sprite)
         
     def check_collision(self):
@@ -158,23 +163,9 @@ class Director(arcade.View):
             Args:
                 self (Director): An instance of Director.
         """
-        # player - asteroids
-        for asteroid in arcade.check_for_collision_with_list(self.player_ship_sprite, self.asteroid_list):
-            self.player_ship_sprite.subtract_hit_points(asteroid.damage)
-        # player - enemy projectiles
-        for projectile in arcade.check_for_collision_with_list(self.player_ship_sprite, self.enemy_projectile_list):
-            self.player_ship_sprite.subtract_hit_points(projectile.damage)
-            self.enemy_projectile_list.remove(projectile)
-        # player projectiles - asteroids
-        for projectile in self.player_projectile_list:
-            for asteroid in arcade.check_for_collision_with_list(projectile, self.asteroid_list):
-                asteroid.subtract_hit_points(projectile.damage)
-                self.player_projectile_list.remove(projectile)
-        # player projectiles - enemy pro
-        for player_projectile in self.player_projectile_list:
-            for enemy_projectile in arcade.check_for_collision_with_list(player_projectile, self.enemy_projectile_list):
-                self.enemy_projectile_list.remove(enemy_projectile)
-                self.player_projectile_list.remove(player_projectile)
+
+        self.collision.check_collision(self.player_ship, self.asteroid_list,
+            self.player_projectile_list, self.enemy_projectile_list)
 
     def play_shoot_sound(self):
             """ Plays the shot sound effect when the player shoots

@@ -45,6 +45,7 @@ class SpawnAsteroid:
         self.start_side = random.randint(1, 4)
         self.start_pos = self._get_random_start(self.start_side)
         self.asteroid.damage = 50
+        self.asteroid.score_given = 1
         return self.asteroid
 
     def _get_random_start(self, start_side):
