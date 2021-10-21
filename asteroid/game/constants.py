@@ -46,3 +46,6 @@ SPACE_BG = path.join(RESOURCE_DIRECTORY, path.join("PNG", "space_bg.png"))
 #Sound Effects
 BG_MUSIC = path.join(RESOURCE_DIRECTORY, path.join("ST", "bg_music.mp3"))
 SHOT_SOUND = path.join(RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3"))
+
+#HIGHSCORE_FILE
+HIGHSCORE_FILE = path.join(RESOURCE_DIRECTORY,path.join("user_data", "highscore.txt"))
