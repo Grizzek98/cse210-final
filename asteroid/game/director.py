@@ -112,6 +112,8 @@ class Director(arcade.View):
             else:
                 self.asteroid_spawn_rate = constants.MAX_SPAWN_RATE
 
+        self.score_class.update_highscore()
+
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
@@ -124,8 +126,8 @@ class Director(arcade.View):
         constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT)
 
         #draws score on screen
-        self.score = f"Score: {self.score_class.get_score()}"
-        arcade.draw_text(self.score, 650, 550, arcade.color.GOLDEN_YELLOW, 10)
+        arcade.draw_text(f"Score: {self.score_class.get_score()}", 650, 550, arcade.color.GOLDEN_YELLOW, 10)
+        arcade.draw_text(f"Best: {self.score_class.get_highscore()}", 100, 550, arcade.color.GOLDEN_YELLOW, 10)
 
         self.sprite_list.draw()
         self.asteroid_list.draw()
