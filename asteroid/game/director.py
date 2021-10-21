@@ -13,6 +13,7 @@ from game.player_ship import PlayerShip
 from game.asteroid import Asteroid
 from game.keyboard_control import KeyboardControl
 from game.projectile import Projectile
+from game.score import Score
 
 
 class Director(arcade.View):
@@ -53,6 +54,7 @@ class Director(arcade.View):
         self.spawn_player = spawn.SpawnPlayer()
         self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
+        self.score = Score()
 
     def setup(self):
         """ Handles the initial setup of the game.
