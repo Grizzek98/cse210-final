@@ -18,7 +18,7 @@ class Score:
             Args:
                 self (Score): An instance of Score.
         """
-        self._score = None
+        self._score = 0
         self._high_score = None
 
     def get_score(self):
@@ -36,6 +36,7 @@ class Score:
                 self (Score): An instance of Score.
         """
         self._score += amount
+        print("Score: ", self.get_score())
 
     def subtract_score(self, amount):
         """ Subtracts an amount from the current score.
