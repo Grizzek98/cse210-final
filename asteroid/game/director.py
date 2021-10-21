@@ -53,6 +53,8 @@ class Director(arcade.View):
         self.spawn_player = spawn.SpawnPlayer()
         self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
+        self.spawn_asteroid_control = 0
+        self.asteroid_spawn_rate = 1
 
     def setup(self):
         """ Handles the initial setup of the game.
@@ -91,6 +93,18 @@ class Director(arcade.View):
         self.asteroid_list.on_update(delta_time)
         self.check_collision()
         self.check_remove_sprite()
+
+        #Spawn randomly asteroids
+        self.spawn_asteroid_control += delta_time
+        if self.spawn_asteroid_control >= self.asteroid_spawn_rate:
+            self.asteroid_list.append(self.spawn_asteroid.spawn())
+            self.spawn_asteroid_control = 0
+
+            if self.asteroid_spawn_rate > constants.MAX_SPAWN_RATE:
+                self.asteroid_spawn_rate -= 0.05
+            else:
+                self.asteroid_spawn_rate = constants.MAX_SPAWN_RATE
+
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
