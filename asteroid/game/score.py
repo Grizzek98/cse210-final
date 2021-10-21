@@ -36,7 +36,7 @@ class Score:
                 self (Score): An instance of Score.
         """
         self._score += amount
-        print("Score: ", self.get_score())
+        #print("Score: ", self.get_score())
 
     def subtract_score(self, amount):
         """ Subtracts an amount from the current score.

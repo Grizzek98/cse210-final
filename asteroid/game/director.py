@@ -5,6 +5,7 @@ from os import path
 from pyglet.media import player
 
 
+
 # from arcade import sprite_list
 # from game import player_ship
 from game import spawn
@@ -14,6 +15,7 @@ from game.asteroid import Asteroid
 from game.keyboard_control import KeyboardControl
 from game.projectile import Projectile
 from game.collision import Collision
+from game.score import Score
 
 
 class Director(arcade.View):
@@ -55,6 +57,8 @@ class Director(arcade.View):
         self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
         self.collision = Collision()
+        self.score_class = Score()
+        self.score = ""
         self.spawn_asteroid_control = 0
         self.asteroid_spawn_rate = 1
 
@@ -72,6 +76,7 @@ class Director(arcade.View):
         self.player_ship = self.spawn_player.spawn()
         self.sprite_list.append(self.player_ship)
         self.asteroid_list.extend(self.spawn_asteroid.setup())
+        
 
         # self.asteroid = self.spawn_asteroid.spawn()
         # self.asteroid_list.append(self.asteroid)
@@ -117,6 +122,11 @@ class Director(arcade.View):
         arcade.start_render()
         self.texture.draw_sized(constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2,
         constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT)
+
+        #draws score on screen
+        self.score = f"Score: {self.score_class.get_score()}"
+        arcade.draw_text(self.score, 650, 550, arcade.color.GOLDEN_YELLOW, 10)
+
         self.sprite_list.draw()
         self.asteroid_list.draw()
         self.player_projectile_list.draw()
@@ -190,6 +200,7 @@ class Director(arcade.View):
         for sprite in self.asteroid_list:
             if sprite.get_hit_points() <= 0:
                 self.asteroid_list.remove(sprite)
+                self.score_class.add_score(self.spawn_asteroid.asteroid.score_given)
 
         ## remove out-of-bounds stuff
 
