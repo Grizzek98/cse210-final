@@ -13,7 +13,6 @@ from game.player_ship import PlayerShip
 from game.asteroid import Asteroid
 from game.keyboard_control import KeyboardControl
 from game.projectile import Projectile
-from game.score import Score
 from game.collision import Collision
 
 
@@ -55,7 +54,6 @@ class Director(arcade.View):
         self.spawn_player = spawn.SpawnPlayer()
         self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
-        self.score = Score()
         self.collision = Collision()
         self.spawn_asteroid_control = 0
         self.asteroid_spawn_rate = 1

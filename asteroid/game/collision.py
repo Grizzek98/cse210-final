@@ -1,4 +1,5 @@
 import arcade
+from game.score import Score
 
 class Collision:
     """ Handles collision logic between sprites on the screen.
@@ -9,6 +10,14 @@ class Collision:
         Attributes:
             TODO
     """
+
+    def __init__(self):
+        """ The class constructor.
+        
+            Args:
+                self (Collision): An instance of Collision.
+        """
+        self.score = Score()
 
     def check_collision(self, player_ship=None, asteroid_list=None, player_projectile_list=None,
                         enemy_projectile_list=None):
@@ -46,6 +55,7 @@ class Collision:
             for asteroid in arcade.check_for_collision_with_list(projectile, asteroid_list):
                 asteroid.subtract_hit_points(projectile.damage)
                 player_projectile_list.remove(projectile)
+                self.score.add_score(asteroid.get_score_given())
         #player_projectile - enemy_projectile
         for player_projectile in player_projectile_list:
             for enemy_projectile in arcade.check_for_collision_with_list(player_projectile, enemy_projectile_list):
