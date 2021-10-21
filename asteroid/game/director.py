@@ -91,12 +91,16 @@ class Director(arcade.View):
             self.player_ship_sprite.angle)
             self.player_projectile_list.append(new_shot)
             self.play_shoot_sound()
+
         if len(self.asteroid_list) < self.script.enemy_max :
             self.asteroid_list.append(self.spawn_asteroid.spawn())
         self.script.update(delta_time)
+
+        # call sprite on_update() methods
         self.player_projectile_list.on_update(delta_time)
         self.sprite_list.on_update(delta_time) #<3 arcade
         self.asteroid_list.on_update(delta_time)
+
         self.check_collision()
         self.check_remove_sprite()
 
@@ -171,9 +175,6 @@ class Director(arcade.View):
             for enemy_projectile in arcade.check_for_collision_with_list(player_projectile, self.enemy_projectile_list):
                 self.enemy_projectile_list.remove(enemy_projectile)
                 self.player_projectile_list.remove(player_projectile)
-        # 
-        # 
-        # jectiles
 
     def play_shoot_sound(self):
             """ Plays the shot sound effect when the player shoots
@@ -189,7 +190,7 @@ class Director(arcade.View):
             Args:
                 self (Director): An instance of Director.
         """
-        ## remoce dead stuff
+        ## remove dead stuff
 
         # remove dead player
         for sprite in self.sprite_list:
