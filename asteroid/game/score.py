@@ -95,7 +95,7 @@ class Score:
                 highscore = file.read()
             #Checks if it is not empty
                 if type(highscore) is not None and highscore != '':
-                    highscore = int(highscore)
+                    highscore = int(highscore) 
                 else:
                     highscore = 0
         except:
