@@ -13,7 +13,10 @@ from game.player_ship import PlayerShip
 from game.asteroid import Asteroid
 from game.keyboard_control import KeyboardControl
 from game.projectile import Projectile
+from game.score import Score
+from game.script import GameScript
 from game.collision import Collision
+
 
 
 class Director(arcade.View):
@@ -54,9 +57,12 @@ class Director(arcade.View):
         self.spawn_player = spawn.SpawnPlayer()
         self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
+
+        self.score = Score()
+        self.script = GameScript()
         self.collision = Collision()
-        self.spawn_asteroid_control = 0
-        self.asteroid_spawn_rate = 1
+
+
 
     def setup(self):
         """ Handles the initial setup of the game.
@@ -90,23 +96,18 @@ class Director(arcade.View):
             self.player_ship.angle)
             self.player_projectile_list.append(new_shot)
             self.play_shoot_sound()
+
+        if len(self.asteroid_list) < self.script.enemy_max :
+            self.asteroid_list.append(self.spawn_asteroid.spawn())
+        self.script.update(delta_time)
+
+        # call sprite on_update() methods
         self.player_projectile_list.on_update(delta_time)
         self.sprite_list.on_update(delta_time) #<3 arcade
         self.asteroid_list.on_update(delta_time)
+
         self.check_collision()
         self.check_remove_sprite()
-
-        #Spawn randomly asteroids
-        self.spawn_asteroid_control += delta_time
-        if self.spawn_asteroid_control >= self.asteroid_spawn_rate:
-            self.asteroid_list.append(self.spawn_asteroid.spawn())
-            self.spawn_asteroid_control = 0
-
-            if self.asteroid_spawn_rate > constants.MAX_SPAWN_RATE:
-                self.asteroid_spawn_rate -= 0.05
-            else:
-                self.asteroid_spawn_rate = constants.MAX_SPAWN_RATE
-
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
@@ -162,6 +163,7 @@ class Director(arcade.View):
             Args:
                 self (Director): An instance of Director.
         """
+
         self.collision.check_collision(self.player_ship, self.asteroid_list,
             self.player_projectile_list, self.enemy_projectile_list)
 
@@ -179,7 +181,7 @@ class Director(arcade.View):
             Args:
                 self (Director): An instance of Director.
         """
-        ## remoce dead stuff
+        ## remove dead stuff
 
         # remove dead player
         for sprite in self.sprite_list:
