@@ -90,14 +90,19 @@ class Score:
             self(Score): An instance of Score          
         """
         #Opens the file with stored data
-        with(open(constants.HIGHSCORE_FILE,'r')) as file:
-            highscore = file.read()
-        #Checks if it is not empty
-            if type(highscore) is not None and highscore != '':
-                highscore = int(highscore)
-            else:
+        try: #If the file is not created yet (Fist time playing) it won't break
+            with(open(constants.HIGHSCORE_FILE,'r')) as file:
+                highscore = file.read()
+            #Checks if it is not empty
+                if type(highscore) is not None and highscore != '':
+                    highscore = int(highscore)
+                else:
+                    highscore = 0
+        except:
+            with(open(constants.HIGHSCORE_FILE,'w')) as file:
+                file.write("0")
                 highscore = 0
-        
+            
         return highscore
 
     def update_highscore(self):
