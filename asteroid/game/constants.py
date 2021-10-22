@@ -48,4 +48,4 @@ BG_MUSIC = path.join(RESOURCE_DIRECTORY, path.join("ST", "bg_music.mp3"))
 SHOT_SOUND = path.join(RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3"))
 
 #HIGHSCORE_FILE
-HIGHSCORE_FILE = path.join(RESOURCE_DIRECTORY,path.join("user_data", "highscore.txt"))
+HIGHSCORE_FILE = path.join(ROOT_DIRECTORY,path.join("user_data", "highscore.txt"))
