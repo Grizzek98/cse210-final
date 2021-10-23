@@ -33,6 +33,7 @@ SPRITE_RIGHT = 270
 
 #projectile
 PROJECTILE_SCALE = .05
+PLAYER_FIRERATE = 0.2
 ENEMY_PROJECTILE_SPEED = 25
 
 #asteroid
@@ -48,4 +49,12 @@ BG_MUSIC = path.join(RESOURCE_DIRECTORY, path.join("ST", "bg_music.mp3"))
 SHOT_SOUND = path.join(RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3"))
 
 #HIGHSCORE_FILE
+
+HIGHSCORE_FILE = path.join(RESOURCE_DIRECTORY,path.join("user_data", "highscore.txt"))
+
+#Power-ups
+DOUBLEX_POWER_SPRITE = path.join(RESOURCE_DIRECTORY,path.join("PNG", "2x_buff.png"))
+POWERUP_DURATION = 15
+
 HIGHSCORE_FILE = path.join(ROOT_DIRECTORY,path.join("user_data", "highscore.txt"))
+
