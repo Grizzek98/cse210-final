@@ -55,7 +55,7 @@ class Collision:
             for asteroid in arcade.check_for_collision_with_list(projectile, asteroid_list):
                 asteroid.subtract_hit_points(projectile.damage)
                 player_projectile_list.remove(projectile)
-                self.score.add_score(asteroid.get_score_given())
+                self.score.add_score(asteroid.get_score_given()) #BUG the player gets score for hitting, not destroying here
         #player_projectile - enemy_projectile
         for player_projectile in player_projectile_list:
             for enemy_projectile in arcade.check_for_collision_with_list(player_projectile, enemy_projectile_list):
