@@ -64,6 +64,7 @@ class Director(arcade.View):
         self.collision = Collision()
         self.score_class = Score()
         self.score = ""
+        self.shot_control = 0
         
         self.spawn_asteroid_control = 0
         self.asteroid_spawn_rate = 1
@@ -95,13 +96,16 @@ class Director(arcade.View):
         
             Args:
                 self (Director): An instance of Director.
-                delta_time (not sure): Describes the elapsed time between frames.
+                delta_time (Float): Describes the elapsed time between frames.
         """
+        self.shot_control += delta_time
         if self.player_ship.is_shooting:
-            new_shot = Projectile(self.player_ship.center_x, self.player_ship.center_y,
-            self.player_ship.angle)
-            self.player_projectile_list.append(new_shot)
-            self.play_shoot_sound()
+            if self.shot_control >= constants.PLAYER_FIRERATE:
+                new_shot = Projectile(self.player_ship.center_x, self.player_ship.center_y,
+                self.player_ship.angle)
+                self.player_projectile_list.append(new_shot)
+                self.play_shoot_sound()
+                self.shot_control = 0
 
         if len(self.asteroid_list) < self.script.enemy_max :
             self.asteroid_list.append(self.spawn_asteroid.spawn())
@@ -218,7 +222,7 @@ class Director(arcade.View):
         for sprite in self.asteroid_list:
             if sprite.get_hit_points() <= 0:
                 self.asteroid_list.remove(sprite)
-                self.score_class.add_score(self.spawn_asteroid.asteroid.score_given)
+                self.score_class.add_score(self.spawn_asteroid.asteroid.get_score_given())
 
         ## remove out-of-bounds stuff
 
