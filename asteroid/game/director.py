@@ -158,7 +158,6 @@ class Director(arcade.View):
                  self.power_up.timer_reset()
         
 
-        print(control)
         self.score_class.update_highscore()
 
 
