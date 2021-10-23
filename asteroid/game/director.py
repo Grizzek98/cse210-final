@@ -1,5 +1,5 @@
 
-import arcade
+import arcade, random
 from os import path
 
 from pyglet.media import player
@@ -18,6 +18,8 @@ from game.score import Score
 from game.script import GameScript
 from game.collision import Collision
 from game.score import Score
+from game.power_ups import PowerUp
+from game.spawn.spawn_power import SpawnPower
 
 
 
@@ -55,16 +57,20 @@ class Director(arcade.View):
         self.keyboard_control = KeyboardControl()
         self.player_projectile_list = None
         self.enemy_projectile_list = None
+        self.power_list = None
         self.shot_sound = arcade.load_sound(constants.SHOT_SOUND)
         self.spawn_player = spawn.SpawnPlayer()
         self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
+        self.spawn_power = SpawnPower()
+        self.power_up = PowerUp()
         
         self.script = GameScript()
         self.collision = Collision()
         self.score_class = Score()
         self.score = ""
         self.shot_control = 0
+        self.fire_rate = constants.PLAYER_FIRERATE
         
         self.spawn_asteroid_control = 0
         self.asteroid_spawn_rate = 1
@@ -80,10 +86,12 @@ class Director(arcade.View):
         self.player_projectile_list = arcade.SpriteList()
         self.enemy_projectile_list = arcade.SpriteList()
         self.asteroid_list = arcade.SpriteList()
+        self.power_list = arcade.SpriteList()
 
         self.player_ship = self.spawn_player.spawn()
         self.sprite_list.append(self.player_ship)
         self.asteroid_list.extend(self.spawn_asteroid.setup())
+        self.power_list.append(self.spawn_power.setup(constants.DOUBLEX_POWER_SPRITE))
         
 
         # self.asteroid = self.spawn_asteroid.spawn()
@@ -98,9 +106,10 @@ class Director(arcade.View):
                 self (Director): An instance of Director.
                 delta_time (Float): Describes the elapsed time between frames.
         """
+        #Player's fire rate
         self.shot_control += delta_time
         if self.player_ship.is_shooting:
-            if self.shot_control >= constants.PLAYER_FIRERATE:
+            if self.shot_control >= self.fire_rate:
                 new_shot = Projectile(self.player_ship.center_x, self.player_ship.center_y,
                 self.player_ship.angle)
                 self.player_projectile_list.append(new_shot)
@@ -115,6 +124,7 @@ class Director(arcade.View):
         self.player_projectile_list.on_update(delta_time)
         self.sprite_list.on_update(delta_time) #<3 arcade
         self.asteroid_list.on_update(delta_time)
+        self.power_list.on_update(delta_time)
 
         self.check_collision()
         self.check_remove_sprite()
@@ -130,7 +140,25 @@ class Director(arcade.View):
                 self.asteroid_spawn_rate -= 0.05
             else:
                 self.asteroid_spawn_rate = constants.MAX_SPAWN_RATE
+        
 
+        #Spawn randomly Power Ups
+        control = random.random()
+        if control < 0.001 and len(self.power_list) < 2 and self.collision.power_up_status == False:
+            self.power_list.append(self.spawn_power.spawn(constants.DOUBLEX_POWER_SPRITE))
+        
+        if self.collision.power_up_status:
+            self.power_up.power_up_timer -= delta_time
+            self.fire_rate = self.power_up.shot_speed_power()
+            
+            
+            if self.power_up.power_up_timer <= 0:
+                 self.fire_rate = constants.PLAYER_FIRERATE
+                 self.collision.power_up_status = False
+                 self.power_up.timer_reset()
+        
+
+        print(control)
         self.score_class.update_highscore()
 
 
@@ -147,11 +175,13 @@ class Director(arcade.View):
         #draws score on screen
         arcade.draw_text(f"Score: {self.score_class.get_score()}", 650, 550, arcade.color.GOLDEN_YELLOW, 10)
         arcade.draw_text(f"Best: {self.score_class.get_highscore()}", 100, 550, arcade.color.GOLDEN_YELLOW, 10)
-
+        if self.collision.power_up_status:
+            arcade.draw_text(f"POWER UP: {self.power_up.power_up_timer:.0f}",50, 50, arcade.color.GRAY, 10)
         self.sprite_list.draw()
         self.asteroid_list.draw()
         self.player_projectile_list.draw()
         self.enemy_projectile_list.draw()
+        self.power_list.draw()
         
 
 
@@ -195,7 +225,7 @@ class Director(arcade.View):
         """
 
         self.collision.check_collision(self.player_ship, self.asteroid_list,
-            self.player_projectile_list, self.enemy_projectile_list)
+            self.player_projectile_list, self.enemy_projectile_list, self.power_list)
 
     def play_shoot_sound(self):
             """ Plays the shot sound effect when the player shoots
@@ -204,6 +234,9 @@ class Director(arcade.View):
                     self (Director): An instance of Director.
             """
             arcade.play_sound(self.shot_sound)
+    
+
+        
 
     def check_remove_sprite(self):
         """ Checks whether a sprite should be remove from screen based on hit points.

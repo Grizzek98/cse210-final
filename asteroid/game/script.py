@@ -90,6 +90,7 @@ class GameScript():
         self._update_time_category()
         self._update_spawn_rate()
         self._update_enemy_max()
+
         
     #debug methods
     def set_time(self,time):
