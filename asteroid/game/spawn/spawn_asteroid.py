@@ -45,6 +45,7 @@ class SpawnAsteroid:
         self.start_side = random.randint(1, 4)
         self._get_random_start(self.start_side)
         self.asteroid.damage = 50
+        self.asteroid.change_angle = self._get_random_rotation()
         self.asteroid.score_given = 1
         return self.asteroid
 
@@ -107,3 +108,11 @@ class SpawnAsteroid:
         self.asteroid.center_y = -5
         self.asteroid.change_x = random.randint(-5, 5)
         self.asteroid.change_y = random.randint(1, 5)
+
+    def _get_random_rotation(self):
+        """ Returns a random rotation value.
+        
+            Args:
+                self (SpawnAsteroid): An instance of SpawnAsteroid.
+        """
+        return random.randint(-10, 10)
