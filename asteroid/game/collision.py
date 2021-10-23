@@ -66,6 +66,7 @@ class Collision:
                     self.score.add_score(asteroid.get_score_given())
                 except:
                     pass
+
         #player_projectile - enemy_projectile
         for player_projectile in player_projectile_list:
             for enemy_projectile in arcade.check_for_collision_with_list(player_projectile, enemy_projectile_list):

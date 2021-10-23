@@ -102,17 +102,29 @@ class KeyboardControl():
         #the key represents, reverse acceleration direcion.
         #and set target_change to zero
         if key == arcade.key.LEFT and ship.acceleration_x < 0 :
-            ship.acceleration_x *= -1
-            ship.target_change_x = 0
+            if ship.change_x > 0 :
+                ship.target_change_x = 0
+            else :
+                ship.acceleration_x *= -1
+                ship.target_change_x = 0
         if key == arcade.key.RIGHT and ship.acceleration_x > 0 :
-            ship.acceleration_x *= -1
-            ship.target_change_x = 0
+            if ship.change_x < 0 :
+                ship.target_change_x = 0
+            else:
+                ship.acceleration_x *= -1
+                ship.target_change_x = 0
         if key == arcade.key.DOWN and ship.acceleration_y < 0 :
-            ship.acceleration_y *= -1
-            ship.target_change_y = 0
+            if ship.change_y > 0 :
+                ship.target_change_y = 0
+            else :
+                ship.acceleration_y *= -1
+                ship.target_change_y = 0
         if key == arcade.key.UP and ship.acceleration_y > 0 :
-            ship.acceleration_y *= -1
-            ship.target_change_y = 0
+            if ship.change_y < 0 :
+                ship.target_change_y = 0
+            else :
+                ship.acceleration_y *= -1
+                ship.target_change_y = 0
 
         # if key == arcade.key.LEFT or key == arcade.key.RIGHT:
         #     ship.change_x = 0
