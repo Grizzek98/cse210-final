@@ -19,7 +19,7 @@ class Weapons():
             Args:
                 self (Weapon): An instance of Weapon.
         """
-        self.fire_rate = .5
+        self.fire_rate = .2
         self._current_fire_interval = 0 #time since last fire
         self.projectile = Projectile
         self.weapon_damage = 10
@@ -37,11 +37,9 @@ class Weapons():
             args: 
                 ship (Sprite) the object 'creating' the shot
                 rate_modifier (float_ any multiplicative power up mod to damage"""
-        change_x = 2
-        change_y = 2
         damage = self.weapon_damage * damage_modifier
-        return self.projectile(center_x= ship.center_x, center_y = ship.center_y,
-        angle= ship.angle, change_x=change_x, change_y=change_y, damage= damage, num_pierce= self.weapon_piercing)
+        self._current_fire_interval = 0
+        return self.projectile(center_x= ship.center_x, center_y = ship.center_y, angle= ship.angle, damage= damage, num_pierce= self.weapon_piercing)
 
     def on_update(self, delta_time: float) -> None:
         """update fire interval for time

@@ -55,7 +55,7 @@ class PlayerShip(FloatingObject):
         """request and return a shot from the current weapon
             args:
                 self (PlayerShip) an instance of PlayerShip"""
-        return self.weapon.generate_shot(self) #TODO this feels stinky. generate_shot could be easily modified to take only the needed params from ship
+        return self.weapon.generate_shot(self)
 
     def _update_weapon(self, delta_time):
         """call the weapon's on_update method

@@ -21,9 +21,3 @@ class BasicLaser(Weapons):
             Args:
                 self (BasicLaser): An instance of BasicLaser.
         """
-        self.projectile_sprite = Projectile
-    
-    def generate_shot(self, ship: Sprite) -> Projectile:
-        """Returns a projectile with correct positon and orientation
-        args: ship (Sprite) the object 'creating' the shot"""
-        return self.projectile_sprite(center_x= ship.center_x,center_y = ship.center_y, angle= ship.angle)

@@ -14,7 +14,6 @@ from game import constants
 from game.player_ship import PlayerShip
 from game.asteroid import Asteroid
 from game.keyboard_control import KeyboardControl
-from game.projectile import Projectile
 from game.score import Score
 from game.script import GameScript
 from game.collision import Collision
@@ -203,18 +202,7 @@ class Director(arcade.View):
                 BUG modifiers (not sure): Haven't quite learned what the modifiers could be.
         """
         self.keyboard_control.key_release(key, self.player_ship)
-    
-    def shot(self): #TODO create constructor returning new shots
-        """Creates a projectile
 
-        Args:
-            self (Director): An instance of Director.
-    """
-        self.projectile_sprite = Projectile(path.join(constants.RESOURCE_DIRECTORY, path.join("PNG", "projectile.png")), constants.SPRITE_SCALING)
-        self.projectile_sprite.center_x = self.player_ship.center_x
-        self.projectile_sprite.center_y = self.player_ship.center_y - 100
-        self.player_projectile_list.append(self.projectile_sprite)
-        
     def check_collision(self):
         """ Checks for collision between objects on the screen.
         
