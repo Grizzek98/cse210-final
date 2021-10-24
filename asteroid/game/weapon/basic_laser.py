@@ -1,10 +1,10 @@
 from arcade.sprite import Sprite
 from game.floating_object import FloatingObject
-from weapon import Weapon
-from projectile import Projectile
+from game.weapon.weapons import Weapons
+from game.weapon.projectile import Projectile
 
 
-class BasicLaser(Weapon):
+class BasicLaser(Weapons):
     """ A basic burst laser weapon.
 
         Stereotypes:
@@ -15,6 +15,7 @@ class BasicLaser(Weapon):
     """
 
     def __init__(self):
+        super().__init__()
         """ Instantiates an instance of BasicLaser.
         
             Args:

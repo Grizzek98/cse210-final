@@ -1,8 +1,9 @@
 import arcade
 import game.constants
 from os import path
+from game.floating_object import FloatingObject
 
-class Projectile(arcade.Sprite):
+class Projectile(FloatingObject):
     """ The base file for the actual sprite created when a weapon is fired.
     
         Stereotypes:

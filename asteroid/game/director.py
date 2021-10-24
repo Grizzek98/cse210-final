@@ -6,6 +6,7 @@ from pyglet.media import player
 
 
 
+
 # from arcade import sprite_list
 # from game import player_ship
 from game import spawn
@@ -99,6 +100,9 @@ class Director(arcade.View):
 
         # self.shot_sound = arcade.load_sound(path.join(constants.RESOURCE_DIRECTORY, path.join("ST", "laser_shot_effect.mp3")))
 
+    def check_fire(self, delta_time, ship):
+        """check if an object is firing this turn"""
+        pass
     def on_update(self, delta_time):
         """ Handles what happens every arcade update.
         
@@ -106,16 +110,9 @@ class Director(arcade.View):
                 self (Director): An instance of Director.
                 delta_time (Float): Describes the elapsed time between frames.
         """
-        #Player's fire rate
-        self.shot_control += delta_time
-        if self.player_ship.is_shooting:
-            if self.shot_control >= self.fire_rate:
-                new_shot = Projectile(self.player_ship.center_x, self.player_ship.center_y,
-                self.player_ship.angle)
-                self.player_projectile_list.append(new_shot)
-                self.play_shoot_sound()
-                self.shot_control = 0
 
+
+        #should spawn
         if len(self.asteroid_list) < self.script.enemy_max :
             self.asteroid_list.append(self.spawn_asteroid.spawn())
         self.script.update(delta_time)
@@ -129,7 +126,9 @@ class Director(arcade.View):
         self.check_collision()
         self.check_remove_sprite()
 
-
+        #generate shots
+        if self.player_ship.can_fire() :
+            self.player_projectile_list.append(self.player_ship.create_shot())
         #Spawn randomly asteroids
         self.spawn_asteroid_control += delta_time
         if self.spawn_asteroid_control >= self.asteroid_spawn_rate:

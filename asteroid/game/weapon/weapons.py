@@ -1,8 +1,7 @@
 from arcade import Sprite
-from asteroid.game import projectile
-from weapon.projectile import Projectile
+from game.weapon.projectile import Projectile
 
-class Weapon():
+class Weapons():
     """ The fundamental class of a weapon object. Other weapon classes inherit from this one.
 
         Stereotypes:
@@ -38,9 +37,11 @@ class Weapon():
             args: 
                 ship (Sprite) the object 'creating' the shot
                 rate_modifier (float_ any multiplicative power up mod to damage"""
+        change_x = 2
+        change_y = 2
         damage = self.weapon_damage * damage_modifier
         return self.projectile(center_x= ship.center_x, center_y = ship.center_y,
-        angle= ship.angle, damage= damage, num_pierce= self.weapon_piercing)
+        angle= ship.angle, change_x=change_x, change_y=change_y, damage= damage, num_pierce= self.weapon_piercing)
 
     def on_update(self, delta_time: float) -> None:
         """update fire interval for time
