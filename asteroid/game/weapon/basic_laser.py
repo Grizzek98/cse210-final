@@ -21,3 +21,4 @@ class BasicLaser(Weapons):
             Args:
                 self (BasicLaser): An instance of BasicLaser.
         """
+        self.fire_rate = 0
