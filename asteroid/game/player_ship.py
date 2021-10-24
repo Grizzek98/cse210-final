@@ -1,6 +1,7 @@
 
 from game import constants
 from game.floating_object import FloatingObject
+import game.weapon
 
 class PlayerShip(FloatingObject):
     """ A player-controlled ship that moves around the screen.
@@ -15,6 +16,8 @@ class PlayerShip(FloatingObject):
     def __init__(self, filename= constants.SHIP_SPRITE_DIRECTORY, scale= constants.SPRITE_SCALING):
         super().__init__(filename= filename, scale= scale)
         self.is_shooting = False
+        self.weapon = game.weapon.BasicLaser() #default
+        self.power_up = None #TODO unimplemented powerup field
         
     def on_update(self, delta_time):
         """ Handles what happens on update
@@ -37,7 +40,30 @@ class PlayerShip(FloatingObject):
         self._check_velocity_bounds()
         self.check_bounds_x()
         self.check_bounds_y()
+        self._update_weapon(delta_time)
+    
+    def can_fire(self):
+        """check if the ship can fire a shot
+        args:
+            self (PlayerShip) an instance of PlayerShip"""
+        if self.is_shooting:
+            return self.weapon.can_fire()
+        else :
+            return False
 
+    def create_shot(self) -> game.weapon.Projectile:
+        """request and return a shot from the current weapon
+            args:
+                self (PlayerShip) an instance of PlayerShip"""
+        return self.weapon.generate_shot(self)
+
+    def _update_weapon(self, delta_time):
+        """call the weapon's on_update method
+        args:
+            self (PlayerShip) an instance of PlayerShip
+            delta_time (float) time since last frame
+            """
+        self.weapon.on_update(delta_time)
 
     def check_bounds_x(self):
         """ Checks whether object has reached the x boundary.
