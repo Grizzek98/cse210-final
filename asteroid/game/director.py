@@ -20,6 +20,7 @@ from game.collision import Collision
 from game.score import Score
 from game.power_ups import PowerUp
 from game.spawn.spawn_power import SpawnPower
+from game.enemy_service import EnemyService
 
 
 
@@ -50,8 +51,8 @@ class Director(arcade.View):
         super().__init__()
         self.window.set_mouse_visible(False)
         self.texture = arcade.load_texture(constants.SPACE_BG)
-        self.sprite_list = None
-        self.asteroid_list = None
+        # self.sprite_list = None
+        # self.asteroid_list = None
         self.player_ship = None
         self.projectile_sprite = None
         self.keyboard_control = KeyboardControl()
@@ -60,10 +61,11 @@ class Director(arcade.View):
         self.power_list = None
         self.shot_sound = arcade.load_sound(constants.SHOT_SOUND)
         self.spawn_player = spawn.SpawnPlayer()
-        self.spawn_enemy = spawn.SpawnEnemy()
+        # self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
         self.spawn_power = SpawnPower()
         self.power_up = PowerUp()
+        self.enemy_service = EnemyService()
         
         self.script = GameScript()
         self.collision = Collision()
@@ -85,12 +87,12 @@ class Director(arcade.View):
         self.sprite_list = arcade.SpriteList()
         self.player_projectile_list = arcade.SpriteList()
         self.enemy_projectile_list = arcade.SpriteList()
-        self.asteroid_list = arcade.SpriteList()
+        # self.asteroid_list = arcade.SpriteList()
         self.power_list = arcade.SpriteList()
 
         self.player_ship = self.spawn_player.spawn()
         self.sprite_list.append(self.player_ship)
-        self.asteroid_list.extend(self.spawn_asteroid.setup())
+        self.enemy_service.asteroid_list.extend(self.spawn_asteroid.setup())
         self.power_list.append(self.spawn_power.setup(constants.DOUBLEX_POWER_SPRITE))
         
 
@@ -102,6 +104,7 @@ class Director(arcade.View):
     def check_fire(self, delta_time, ship):
         """check if an object is firing this turn"""
         pass
+
     def on_update(self, delta_time):
         """ Handles what happens every arcade update.
         
@@ -112,14 +115,15 @@ class Director(arcade.View):
 
 
         #should spawn
-        if len(self.asteroid_list) < self.script.enemy_max :
-            self.asteroid_list.append(self.spawn_asteroid.spawn())
+        # if len(self.asteroid_list) < self.script.enemy_max :
+        #     self.asteroid_list.append(self.spawn_asteroid.spawn())
         self.script.update(delta_time)
 
         # call sprite on_update() methods
         self.player_projectile_list.on_update(delta_time)
         self.sprite_list.on_update(delta_time) #<3 arcade
-        self.asteroid_list.on_update(delta_time)
+        self.enemy_projectile_list.extend(self.enemy_service.on_update(self.script, delta_time))
+        self.score_class.add_score(self.enemy_service.add_score)
         self.power_list.on_update(delta_time)
 
         self.check_collision()
@@ -129,15 +133,15 @@ class Director(arcade.View):
         if self.player_ship.can_fire() :
             self.player_projectile_list.append(self.player_ship.create_shot())
         #Spawn randomly asteroids
-        self.spawn_asteroid_control += delta_time
-        if self.spawn_asteroid_control >= self.asteroid_spawn_rate:
-            self.asteroid_list.append(self.spawn_asteroid.spawn())
-            self.spawn_asteroid_control = 0
+        # self.spawn_asteroid_control += delta_time
+        # if self.spawn_asteroid_control >= self.asteroid_spawn_rate:
+        #     self.asteroid_list.append(self.spawn_asteroid.spawn())
+        #     self.spawn_asteroid_control = 0
 
-            if self.asteroid_spawn_rate > constants.MAX_SPAWN_RATE:
-                self.asteroid_spawn_rate -= 0.05
-            else:
-                self.asteroid_spawn_rate = constants.MAX_SPAWN_RATE
+        #     if self.asteroid_spawn_rate > constants.MAX_SPAWN_RATE:
+        #         self.asteroid_spawn_rate -= 0.05
+        #     else:
+        #         self.asteroid_spawn_rate = constants.MAX_SPAWN_RATE
         
 
         #Spawn randomly Power Ups
@@ -175,7 +179,7 @@ class Director(arcade.View):
         if self.collision.power_up_status:
             arcade.draw_text(f"POWER UP: {self.power_up.power_up_timer:.0f}",50, 50, arcade.color.GRAY, 10)
         self.sprite_list.draw()
-        self.asteroid_list.draw()
+        self.enemy_service.asteroid_list.draw() 
         self.player_projectile_list.draw()
         self.enemy_projectile_list.draw()
         self.power_list.draw()
@@ -210,7 +214,7 @@ class Director(arcade.View):
                 self (Director): An instance of Director.
         """
 
-        self.collision.check_collision(self.player_ship, self.asteroid_list,
+        self.collision.check_collision(self.player_ship, self.enemy_service.asteroid_list,
             self.player_projectile_list, self.enemy_projectile_list, self.power_list)
 
     def play_shoot_sound(self):
@@ -238,17 +242,11 @@ class Director(arcade.View):
                 self.sprite_list.remove(sprite)
 
         # remove dead asteroids
-        for sprite in self.asteroid_list:
-            if sprite.get_hit_points() <= 0:
-                self.asteroid_list.remove(sprite)
-                self.score_class.add_score(self.spawn_asteroid.asteroid.get_score_given())
+
 
         ## remove out-of-bounds stuff
 
         # remove gone asteroids
-        for sprite in self.asteroid_list:
-            if sprite.check_bounds_x() or sprite.check_bounds_y():
-                self.asteroid_list.remove(sprite)
 
         # remove gone player_projectiles
         for sprite in self.player_projectile_list:
