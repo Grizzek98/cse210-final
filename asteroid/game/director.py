@@ -12,7 +12,6 @@ from pyglet.media import player
 from game import spawn
 from game import constants
 from game.player_ship import PlayerShip
-from game.asteroid import Asteroid
 from game.keyboard_control import KeyboardControl
 from game.score import Score
 from game.script import GameScript
@@ -132,17 +131,6 @@ class Director(arcade.View):
         #generate shots
         if self.player_ship.can_fire() :
             self.player_projectile_list.append(self.player_ship.create_shot())
-        #Spawn randomly asteroids
-        # self.spawn_asteroid_control += delta_time
-        # if self.spawn_asteroid_control >= self.asteroid_spawn_rate:
-        #     self.asteroid_list.append(self.spawn_asteroid.spawn())
-        #     self.spawn_asteroid_control = 0
-
-        #     if self.asteroid_spawn_rate > constants.MAX_SPAWN_RATE:
-        #         self.asteroid_spawn_rate -= 0.05
-        #     else:
-        #         self.asteroid_spawn_rate = constants.MAX_SPAWN_RATE
-        
 
         #Spawn randomly Power Ups
         control = random.random()

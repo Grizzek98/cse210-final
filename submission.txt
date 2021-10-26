@@ -1,2 +1,0 @@
-https://github.com/Grizzek98/cse210-final.git
-5 - We should get a 5 for working on and releasing a functioning alpha release of our video game.
