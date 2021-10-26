@@ -37,7 +37,7 @@ class Collision:
                 self (Collision): An instance of Collision.
         """
         #player - asteroid
-        for asteroid in arcade.check_for_collision_with_list(player_ship, asteroid_list):
+        for asteroid in arcade.check_for_collision_with_lists(player_ship, asteroid_list):
             player_ship.subtract_hit_points(asteroid.damage)
         #player - enemy projectile
         for projectile in arcade.check_for_collision_with_list(player_ship, enemy_projectile_list):
@@ -59,7 +59,7 @@ class Collision:
         """
         #player_projectile - asteroid
         for projectile in player_projectile_list:
-            for asteroid in arcade.check_for_collision_with_list(projectile, asteroid_list):
+            for asteroid in arcade.check_for_collision_with_lists(projectile, asteroid_list):
                 asteroid.subtract_hit_points(projectile.damage)
                 player_projectile_list.remove(projectile)
                 self.score.add_score(asteroid.get_score_given()) #BUG the player gets score for hitting, not destroying here

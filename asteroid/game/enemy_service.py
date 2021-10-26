@@ -126,4 +126,4 @@ class EnemyService():
         return projectile_list
 
     def get_all_enemies(self):
-        return self.enemy_list_map.values()
+        return list(self.enemy_list_map.values())
