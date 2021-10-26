@@ -1,4 +1,5 @@
 import game.constants
+from game.asteroid import Asteroid
 #TODO class could be better abstracted for simpler, more powerful inheritance in the future
 class GameScript():
     """Controls the state of the game based on time since start and score
@@ -17,7 +18,7 @@ class GameScript():
     def __init__(self) -> None:
         """the class constructor"""
         self.total_time = 0 #formerly spawnasteroid_control
-        self.enemy_spawn_rate = 1 #in hertz
+        self.enemy_spawn_rate = 1 #Smallest needed interum between spawns
         self.enemy_max = 5
 
         #time_separations
@@ -29,8 +30,8 @@ class GameScript():
         self.time_3 = 25
         self.time_4 = 37
         self.time_5 = 42
-
-        self.allowed_enemies = [] #(unemplemented) names or other indicator of allowed enemy spawns
+        self.allowed_enemies = [[Asteroid, 30]] #(unemplemented) names or other indicator of allowed enemy spawns
+        #a list of lists, each list containing the object name and the num allowed.
 
     def _update_time_category(self):
         """get current time catagory based on time
@@ -54,17 +55,17 @@ class GameScript():
         args:
             self: an instance of GameScript"""
         if self.time_category == 0 :
-            self.enemy_spawn_rate = .5
+            self.enemy_spawn_rate = .4
         elif self.time_category == 1 :
-            self.enemy_spawn_rate = 2
+            self.enemy_spawn_rate = .2
         elif self.time_category == 2 :
-            self.enemy_spawn_rate = 3
+            self.enemy_spawn_rate = .1
         elif self.time_category == 3 :
-            self.enemy_spawn_rate = 4
+            self.enemy_spawn_rate = .05
         elif self.time_category == 4 :
-            self.enemy_spawn_rate = 5
+            self.enemy_spawn_rate = .02
         elif self.time_category == 5 :
-            self.enemy_spawn_rate = self.total_time % 10 + 1
+            self.enemy_spawn_rate = .01
 
     def _update_enemy_max(self):
         """update max enemies according to time category
@@ -81,8 +82,7 @@ class GameScript():
         elif self.time_category == 4 :
             self.enemy_max = 21
         elif self.time_category == 5 :
-            self.enemy_spawn_rate = self.total_time % 4 + 5
-        pass
+            pass
 
     def update(self, delta_time):
         """The update method to be called every frame."""
