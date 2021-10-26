@@ -126,7 +126,7 @@ class Director(arcade.View):
         self.power_list.on_update(delta_time)
 
         self.check_collision()
-        self.check_remove_sprite()
+        # self.check_remove_sprite()
 
         #generate shots
         if self.player_ship.can_fire() :
@@ -218,35 +218,35 @@ class Director(arcade.View):
 
         
 
-    def check_remove_sprite(self):
-        """ Checks whether a sprite should be remove from screen based on hit points.
+    # def check_remove_sprite(self):
+        # """ Checks whether a sprite should be remove from screen based on hit points.
         
-            Args:
-                self (Director): An instance of Director.
-        """
-        ## remove dead stuff
+        #     Args:
+        #         self (Director): An instance of Director.
+        # """
+        # ## remove dead stuff
 
-        # remove dead player
-        for sprite in self.sprite_list:
-            if sprite.get_hit_points() <= 0:
-                self.sprite_list.remove(sprite)
+        # # remove dead player
+        # for sprite in self.sprite_list:
+        #     if sprite.get_hit_points() <= 0:
+        #         self.sprite_list.remove(sprite)
 
-        # remove dead asteroids
-        for sprite in self.enemy_service.asteroid_list:
-            if sprite.get_hit_points() <= 0:
-                self.enemy_service.asteroid_list.remove(sprite)
-                self.score_class.add_score(sprite.get_score_given())
+        # # remove dead asteroids
+        # for sprite in self.enemy_service.asteroid_list:
+        #     if sprite.get_hit_points() <= 0:
+        #         self.enemy_service.asteroid_list.remove(sprite)
+        #         self.score_class.add_score(sprite.get_score_given())
 
         ## remove out-of-bounds stuff
 
         # remove gone asteroids
 
         # remove gone player_projectiles
-        for sprite in self.player_projectile_list:
-            if sprite.check_bounds_x() or sprite.check_bounds_y():
-                self.player_projectile_list.remove(sprite)
+        # for sprite in self.player_projectile_list:
+        #     if sprite.check_bounds_x() or sprite.check_bounds_y():
+        #         self.player_projectile_list.remove(sprite)
 
-        # remove gone enemy_projectiles
-        for sprite in self.enemy_projectile_list:
-            if sprite.check_bounds_x() or sprite.check_bounds_y():
-                self.enemy_projectile_list.remove(sprite)
+        # # remove gone enemy_projectiles
+        # for sprite in self.enemy_projectile_list:
+        #     if sprite.check_bounds_x() or sprite.check_bounds_y():
+        #         self.enemy_projectile_list.remove(sprite)
