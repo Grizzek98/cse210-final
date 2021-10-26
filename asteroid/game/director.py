@@ -241,7 +241,7 @@ class Director(arcade.View):
         for sprite in self.asteroid_list:
             if sprite.get_hit_points() <= 0:
                 self.asteroid_list.remove(sprite)
-                self.score_class.add_score(self.spawn_asteroid.asteroid.get_score_given())
+                self.score_class.add_score(sprite.get_score_given())
 
         ## remove out-of-bounds stuff
 
