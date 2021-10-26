@@ -1,5 +1,5 @@
 from arcade.sprite_list.sprite_list import SpriteList
-from game.asteroid import Asteroid
+from game.enemy.asteroid import Asteroid
 from game import constants
 import random
 import arcade
@@ -73,8 +73,8 @@ class SpawnAsteroid:
         """
         asteroid.center_x = -5
         asteroid.center_y = random.randint(0, constants.SCREEN_HEIGHT - 1)
-        asteroid.change_x = random.randint(1, 5)
-        asteroid.change_y = random.randint(-5, 5)
+        asteroid.change_x = random.randint(1, constants.ASTEROID_MAX_VELOCITY)
+        asteroid.change_y = random.randint(-constants.ASTEROID_MAX_VELOCITY, constants.ASTEROID_MAX_VELOCITY)
 
     def _random_right_start(self, asteroid):
         """ Sets a random position and velocity for object on right side of screen.
@@ -84,8 +84,8 @@ class SpawnAsteroid:
         """
         asteroid.center_x = constants.SCREEN_WIDTH + 5
         asteroid.center_y = random.randint(0, constants.SCREEN_HEIGHT)
-        asteroid.change_x = random.randint(-5, -1)
-        asteroid.change_y = random.randint(-5, 5)
+        asteroid.change_x = random.randint(-constants.ASTEROID_MAX_VELOCITY, -1)
+        asteroid.change_y = random.randint(-constants.ASTEROID_MAX_VELOCITY, constants.ASTEROID_MAX_VELOCITY)
 
     def _random_top_start(self, asteroid):
         """ Sets a random position and velocity for object on top of screen.
@@ -95,8 +95,8 @@ class SpawnAsteroid:
         """
         asteroid.center_x = random.randint(0, constants.SCREEN_WIDTH)
         asteroid.center_y = constants.SCREEN_HEIGHT + 5
-        asteroid.change_x = random.randint(-5, 5)
-        asteroid.change_y = random.randint(-5, -1)
+        asteroid.change_x = random.randint(-constants.ASTEROID_MAX_VELOCITY, constants.ASTEROID_MAX_VELOCITY)
+        asteroid.change_y = random.randint(-constants.ASTEROID_MAX_VELOCITY, -1)
 
     def _random_bottom_start(self, asteroid):
         """ Sets a random position and velocity for object on bottom of screen.
@@ -106,8 +106,8 @@ class SpawnAsteroid:
         """
         asteroid.center_x = random.randint(0, constants.SCREEN_WIDTH)
         asteroid.center_y = -5
-        asteroid.change_x = random.randint(-5, 5)
-        asteroid.change_y = random.randint(1, 5)
+        asteroid.change_x = random.randint(-constants.ASTEROID_MAX_VELOCITY, constants.ASTEROID_MAX_VELOCITY)
+        asteroid.change_y = random.randint(1, constants.ASTEROID_MAX_VELOCITY)
 
     def _get_random_rotation(self):
         """ Returns a random rotation value.

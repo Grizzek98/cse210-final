@@ -1,5 +1,6 @@
 import game.constants
-#TODO class could be better abstracted for simpler, more powerful inheritance in the future
+from game import enemy
+
 class GameScript():
     """Controls the state of the game based on time since start and score
     Game script is largely a table. For a given time, it will return
@@ -16,9 +17,8 @@ class GameScript():
     #But levels and a such a table are outside the scope of this project.
     def __init__(self) -> None:
         """the class constructor"""
-        self.total_time = 0 #formerly spawnasteroid_control
-        self.enemy_spawn_rate = 1 #in hertz
-        self.enemy_max = 5
+        self.total_time = 0
+        self.enemy_spawn_rate = 1 #Smallest needed interum between spawns
 
         #time_separations
         #implemented this way for customizability.
@@ -29,8 +29,9 @@ class GameScript():
         self.time_3 = 25
         self.time_4 = 37
         self.time_5 = 42
-
-        self.allowed_enemies = [] #(unemplemented) names or other indicator of allowed enemy spawns
+        self.allowed_enemies = [[enemy.Asteroid, 30]] #pointer to object of allowed spawns
+                                                #a list of lists, each list containing
+                                                #the object name and current num_allowed.
 
     def _update_time_category(self):
         """get current time catagory based on time
@@ -49,48 +50,35 @@ class GameScript():
         elif self.total_time > self.time_5 :
             self.time_category = 5
 
-    def _update_spawn_rate(self):
+    def update_game_state(self):
         """update spawn rate based on time category
         args:
             self: an instance of GameScript"""
         if self.time_category == 0 :
-            self.enemy_spawn_rate = .5
-        elif self.time_category == 1 :
-            self.enemy_spawn_rate = 2
-        elif self.time_category == 2 :
-            self.enemy_spawn_rate = 3
-        elif self.time_category == 3 :
-            self.enemy_spawn_rate = 4
-        elif self.time_category == 4 :
-            self.enemy_spawn_rate = 5
-        elif self.time_category == 5 :
-            self.enemy_spawn_rate = self.total_time % 10 + 1
+            self.enemy_spawn_rate = .4
 
-    def _update_enemy_max(self):
-        """update max enemies according to time category
-        args:
-            self: an instance of GameScript"""
-        if self.time_category == 0 :
-            self.enemy_max = 5
         elif self.time_category == 1 :
-            self.enemy_max = 9
+
+            self.enemy_spawn_rate = .2
         elif self.time_category == 2 :
-            self.enemy_max = 13
+
+            self.enemy_spawn_rate = .1
+
         elif self.time_category == 3 :
-            self.enemy_max = 17
+            self.enemy_spawn_rate = .05
+
         elif self.time_category == 4 :
-            self.enemy_max = 21
+            self.enemy_spawn_rate = .02
+
         elif self.time_category == 5 :
-            self.enemy_spawn_rate = self.total_time % 4 + 5
-        pass
+            self.enemy_spawn_rate = .01
+
 
     def update(self, delta_time):
         """The update method to be called every frame."""
         self.total_time += delta_time
         self._update_time_category()
-        self._update_spawn_rate()
-        self._update_enemy_max()
-
+        self.update_game_state()
         
     #debug methods
     def set_time(self,time):
