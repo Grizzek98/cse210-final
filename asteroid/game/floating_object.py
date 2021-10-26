@@ -22,7 +22,6 @@ class FloatingObject(arcade.Sprite):
                 damage (int) damage dealt on contact
                 acceleration_x (float) change in x velocity
                 acceperation_y (float) change in y velocity
-
         """
         self.hit_points = hit_points
         self.damage = damage
