@@ -1,6 +1,6 @@
 import game.constants
-from game.asteroid import Asteroid
-#TODO class could be better abstracted for simpler, more powerful inheritance in the future
+from game import enemy
+
 class GameScript():
     """Controls the state of the game based on time since start and score
     Game script is largely a table. For a given time, it will return
@@ -29,7 +29,7 @@ class GameScript():
         self.time_3 = 25
         self.time_4 = 37
         self.time_5 = 42
-        self.allowed_enemies = [[Asteroid, 30]] #pointer to object of allowed spawns
+        self.allowed_enemies = [[enemy.Asteroid, 30]] #pointer to object of allowed spawns
                                                 #a list of lists, each list containing
                                                 #the object name and current num_allowed.
 

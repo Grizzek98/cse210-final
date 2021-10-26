@@ -1,9 +1,8 @@
-from typing import List
 import arcade
 from arcade.sprite_list.sprite_list import SpriteList
 from game.floating_object import FloatingObject
 from game.script import GameScript
-from game.asteroid import Asteroid
+from game import enemy
 from game import spawn
 from game.weapon import Projectile
 from random import randint
@@ -25,10 +24,10 @@ class EnemyService():
         self.asteroid_list = arcade.SpriteList()
         self.misc_list = arcade.SpriteList() #for enemies spawned by enemies
         self.enemy_list_map = {
-            Asteroid : self.asteroid_list,
+            enemy.Asteroid : self.asteroid_list,
             FloatingObject : self.misc_list
         }
-        self.enemy_spawn_map = {Asteroid : spawn.SpawnAsteroid}
+        self.enemy_spawn_map = {enemy.Asteroid : spawn.SpawnAsteroid}
         self.time_elapsed = 0 #time since last spawn
         self.add_score = 0
         #TODO should package all lists for draw() method 

@@ -1,4 +1,4 @@
-""" TODO """
+""" contains spwanable enemies """
 
-from game.enemy import asteroid
-from game.enemy import enemy_ship
+from game.enemy.asteroid import Asteroid
+from game.enemy.enemy_ship import EnemyShip
