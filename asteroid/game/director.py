@@ -232,7 +232,10 @@ class Director(arcade.View):
                 self.sprite_list.remove(sprite)
 
         # remove dead asteroids
-
+        for sprite in self.asteroid_list:
+            if sprite.get_hit_points() <= 0:
+                self.asteroid_list.remove(sprite)
+                self.score_class.add_score(sprite.get_score_given())
 
         ## remove out-of-bounds stuff
 
