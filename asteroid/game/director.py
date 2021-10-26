@@ -167,7 +167,9 @@ class Director(arcade.View):
         if self.collision.power_up_status:
             arcade.draw_text(f"POWER UP: {self.power_up.power_up_timer:.0f}",50, 50, arcade.color.GRAY, 10)
         self.sprite_list.draw()
-        self.enemy_service.asteroid_list.draw() 
+        for sprite_list in self.enemy_service.get_all_enemies():
+            sprite_list.draw()
+
         self.player_projectile_list.draw()
         self.enemy_projectile_list.draw()
         self.power_list.draw()
@@ -202,7 +204,7 @@ class Director(arcade.View):
                 self (Director): An instance of Director.
         """
 
-        self.collision.check_collision(self.player_ship, self.enemy_service.asteroid_list,
+        self.collision.check_collision(self.player_ship, list(self.enemy_service.get_all_enemies()),
             self.player_projectile_list, self.enemy_projectile_list, self.power_list)
 
     def play_shoot_sound(self):
