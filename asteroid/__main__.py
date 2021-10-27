@@ -1,4 +1,5 @@
 import arcade
+
 from game import constants
 from game.director import Director
 from game.main_screen import MainScreen

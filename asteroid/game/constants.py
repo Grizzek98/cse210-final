@@ -1,4 +1,5 @@
 from os import path
+
 #directories
 ROOT_DIRECTORY = path.abspath(path.join(path.dirname(__file__),".."))
 RESOURCE_DIRECTORY = path.join(ROOT_DIRECTORY, "resources")
