@@ -2,12 +2,14 @@ import arcade
 from os import path
 from game.keyboard_control import KeyboardControl
 from game import constants
-from game.director import Director
+from game.instructions_screen import InstructionsScreen
 from game.score import Score
 
 
 class MainScreen(arcade.View):
-    """"""
+    """The main menu, first screen
+    
+    """
     def __init__(self):
         super().__init__()
         self.keyboard_control = KeyboardControl()
@@ -37,8 +39,7 @@ class MainScreen(arcade.View):
     
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ If the user presses the mouse button, start the game. """
-        game_view = Director()
-        game_view.setup()
+        game_view = InstructionsScreen()
         self.window.show_view(game_view)
     
     def on_key_press(self, key, modifier):
