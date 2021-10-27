@@ -6,7 +6,9 @@ from game.score import Score
 
 
 class GameOver(arcade.View):
-    """"""
+    """Game over screen
+    
+    """
     def __init__(self, score):
         super().__init__()
         self.keyboard_control = KeyboardControl()

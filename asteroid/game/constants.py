@@ -45,6 +45,7 @@ ASTEROID_MAX_VELOCITY = 5
 #backgrounds
 MAIN_MENU_BG = path.join(RESOURCE_DIRECTORY, path.join("PNG", "main_menu.png"))
 SPACE_BG = path.join(RESOURCE_DIRECTORY, path.join("PNG", "space_bg.png"))
+INSTRUCIONS_BG = path.join(RESOURCE_DIRECTORY, path.join("PNG", "space_conquest_instructions.png"))
 
 #Sound Effects
 BG_MUSIC = path.join(RESOURCE_DIRECTORY, path.join("ST", "bg_music.mp3"))
