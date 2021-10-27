@@ -24,7 +24,7 @@ class PowerUp(FloatingObject):
         pass
     
     def shot_speed_power(self):
-        boosted_fire_rate = constants.PLAYER_FIRERATE / 2
+        boosted_fire_rate = 0.5
         return boosted_fire_rate
     
     def timer_reset(self):
