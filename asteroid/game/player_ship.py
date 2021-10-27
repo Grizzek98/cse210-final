@@ -42,12 +42,12 @@ class PlayerShip(FloatingObject):
         self.check_bounds_y()
         self._update_weapon(delta_time)
     
-    def can_fire(self):
+    def can_fire(self, fire_rate):
         """check if the ship can fire a shot
         args:
             self (PlayerShip) an instance of PlayerShip"""
         if self.is_shooting:
-            return self.weapon.can_fire()
+            return self.weapon.can_fire(fire_rate)
         else :
             return False
 

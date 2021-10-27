@@ -19,7 +19,7 @@ class Weapons():
             Args:
                 self (Weapon): An instance of Weapon.
         """
-        self.fire_rate = .2
+        self.fire_rate = .3
         self._current_fire_interval = 0 #time since last fire
         self.projectile = Projectile
         self.weapon_damage = 10

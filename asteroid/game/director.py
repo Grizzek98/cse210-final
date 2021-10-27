@@ -131,7 +131,7 @@ class Director(arcade.View):
         self.check_remove_sprite()
 
         #generate shots
-        if self.player_ship.can_fire() :
+        if self.player_ship.can_fire(self.fire_rate) :
             self.player_projectile_list.append(self.player_ship.create_shot())
 
         #Spawn randomly Power Ups
