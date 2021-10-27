@@ -129,4 +129,10 @@ class KeyboardControl():
             pass
         
     def exit_game(self):
+        """Exit the game
+
+            Args:
+            self(KeyboardControl): An instance of KeyboardControl
+        
+        """
         arcade.exit()

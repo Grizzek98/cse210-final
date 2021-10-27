@@ -22,7 +22,10 @@ arcade.Sprite
 MOVE_DELAY = .2 * 60 #human reaction time in frames.
 
 
-def get_time_to_impact(pos_ship, pos_asteroid): #time/frames to impact
+def get_time_to_impact(pos_ship, pos_asteroid):
+    """Tests the time to the Asteroid impact with ship
+    
+    """ #time/frames to impact
     velocity = 5 #from spawn_asteriod TODO make that a constant, spawn asteroid
     distance_x = pos_ship[0] - pos_asteroid[0]
     distance_y = pos_ship[1] - pos_asteroid[1]
@@ -36,12 +39,18 @@ def get_time_to_impact(pos_ship, pos_asteroid): #time/frames to impact
     return abs(time) #in frames
 
 def get_collision_radius():
+    """Get the radius of the asteroid for the ship to collide with
+    
+    """
     spawn = SpawnAsteroid()
     asteroid = spawn.spawn()
     radius = asteroid.collision_radius
     return radius
 
-def worst_position(pos_ship): #generate closest possible asteroid position to ship
+def worst_position(pos_ship): 
+    """Generate closest possible asteroid position to ship
+    
+    """
     width = game.constants.SCREEN_WIDTH
     height = game.constants.SCREEN_HEIGHT
     if height > width :
@@ -53,11 +62,17 @@ def worst_position(pos_ship): #generate closest possible asteroid position to sh
     return (pos_x, pos_y)
 
 def get_ship_position():
+    """Checks ship position
+    
+    """
     spawn = SpawnPlayer()
     ship = spawn.spawn()
     return (ship.center_x, ship.center_y)
 
-def ship_avoid_distance(time): #how far can the ship run!
+def ship_avoid_distance(time):
+    """how far can the ship run!
+
+    """
     speed_max = game.constants.MOVEMENT_SPEED
     assert(time - MOVE_DELAY > 0) #else test is invalid
     avoid_distance = speed_max * (time - MOVE_DELAY)
@@ -67,6 +82,9 @@ def ship_avoid_distance(time): #how far can the ship run!
 
 #can the player always avoid taking damage from the first set of spawned asteroids?
 def test_spawn_fairness():
+    """Checks initial spawns to don't be unfair
+    
+    """
 
     position_ship = get_ship_position()
     position_asteroid = worst_position(position_ship)

@@ -39,4 +39,10 @@ class MainScreen(arcade.View):
         self.window.show_view(game_view)
     
     def on_key_press(self, key, modifier):
+        """If the user presses a key it will send the key to the keyboard_control
+
+            Args:
+            self(MainScreen): An instance of MainScreen
+            key(string): The key pressed by the player
+        """
         self.keyboard_control.key_press(key)

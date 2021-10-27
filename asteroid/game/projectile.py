@@ -23,6 +23,12 @@ class Projectile(FloatingObject):
         pass
 
     def set_velocity(self):
+        """Set the velocity of the projectile shot by the player's ship
+
+            Args:
+            self(Projectile): An instance of Projectile
+        
+        """
         #angle to radians
         #sin/cos flipped because arcade's 0 is vertical
         self.change_y = math.sin(self.radians + math.pi / 2) * self.speed

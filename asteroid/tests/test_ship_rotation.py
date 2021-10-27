@@ -9,7 +9,13 @@ from game import constants
 
 
 #Can't use fixtures to reuturn initialzed object. Very sad.
-@pytest.mark.parametrize(
+"""Parameters for testing the rotation of the ship
+    
+    """
+@pytest.mark.parametrize("""Parameters for testing the rotation of the ship
+    
+    """
+    
     "angle, target, expected",
     [(90, 0, -1),
     (270, 0, 1),
