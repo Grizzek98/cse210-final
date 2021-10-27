@@ -1,5 +1,7 @@
+import arcade
 from arcade import Sprite
 from game.weapon.projectile import Projectile
+from game import constants
 
 class Weapons():
     """ The fundamental class of a weapon object. Other weapon classes inherit from this one.
@@ -20,6 +22,7 @@ class Weapons():
                 self (Weapon): An instance of Weapon.
         """
         self.fire_rate = .3
+        self.shot_sound = arcade.load_sound(constants.SHOT_SOUND)
         self._current_fire_interval = 0 #time since last fire
         self.projectile = Projectile
         self.weapon_damage = 10
@@ -39,11 +42,15 @@ class Weapons():
                 rate_modifier (float_ any multiplicative power up mod to damage"""
         damage = self.weapon_damage * damage_modifier
         self._current_fire_interval = 0
+        self.play_shot_sound()
         return self.projectile(center_x= ship.center_x, center_y = ship.center_y, angle= ship.angle, damage= damage, num_pierce= self.weapon_piercing)
 
     def on_update(self, delta_time: float) -> None:
         """update fire interval for time
             args: delta_time (float) time since last frame"""
         self._current_fire_interval += delta_time
+    
+    def play_shot_sound(self):
+        arcade.play_sound(self.shot_sound)
 
 
