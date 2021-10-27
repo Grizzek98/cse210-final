@@ -38,6 +38,10 @@ ENEMY_PROJECTILE_SPEED = 25
 #asteroid
 ASTEROID_SPRITE_DIRECTORY = path.join(RESOURCE_DIRECTORY, path.join("PNG", "asteroid.png"))
 MAX_SPAWN_RATE = 0.3
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 
 #backgrounds
 MAIN_MENU_BG = path.join(RESOURCE_DIRECTORY, path.join("PNG", "main_menu.png"))

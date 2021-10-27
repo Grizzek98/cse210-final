@@ -31,8 +31,8 @@ class SpawnAsteroid:
                 self (SpawnAsteroid): An instance of SpawnAsteroid.
         """
         self._asteroid_list = arcade.SpriteList()
-        for x in range(random.randint(3, 5)):
-            self._asteroid_list.append(self.spawn())
+        
+        self._asteroid_list.append(self.spawn())
         return self._asteroid_list
 
     def spawn(self):

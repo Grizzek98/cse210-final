@@ -14,11 +14,15 @@ from game.player_ship import PlayerShip
 from game.asteroid import Asteroid
 from game.keyboard_control import KeyboardControl
 from game.projectile import Projectile
+<<<<<<< HEAD
 from game.score import Score
 from game.script import GameScript
 from game.collision import Collision
 from game.score import Score
 
+=======
+from game.spawn.spawn_asteroid import SpawnAsteroid
+>>>>>>> main
 
 
 class Director(arcade.View):
@@ -59,6 +63,7 @@ class Director(arcade.View):
         self.spawn_player = spawn.SpawnPlayer()
         self.spawn_enemy = spawn.SpawnEnemy()
         self.spawn_asteroid = spawn.SpawnAsteroid()
+<<<<<<< HEAD
         
         self.script = GameScript()
         self.collision = Collision()
@@ -68,6 +73,10 @@ class Director(arcade.View):
         self.spawn_asteroid_control = 0
         self.asteroid_spawn_rate = 1
 
+=======
+        self.control_spawn_rate = 0
+        self.spawn_rate = 2
+>>>>>>> main
 
     def setup(self):
         """ Handles the initial setup of the game.
@@ -114,6 +123,18 @@ class Director(arcade.View):
 
         self.check_collision()
         self.check_remove_sprite()
+
+        #Controls Asteroid Spawn Rate
+        self.control_spawn_rate += delta_time
+        if self.control_spawn_rate >= self.spawn_rate:
+            self.control_spawn_rate = 0
+            self.asteroid_list.extend(self.spawn_asteroid.setup())
+            if self.spawn_rate > constants.MAX_SPAWN_RATE:
+                self.spawn_rate -= 0.1
+            else:
+                self.spawn_rate = constants.MAX_SPAWN_RATE
+
+        print(f"Number of particles active: {len(self.asteroid_list)+ len(self.player_projectile_list)}")
 
     def on_draw(self):
         """ Handles what happens every time the screen is refreshed.
